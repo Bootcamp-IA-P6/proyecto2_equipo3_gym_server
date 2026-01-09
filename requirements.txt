@@ -1,8 +1,12 @@
+annotated-types==0.7.0
 cached-property==2.0.1
 greenlet==3.3.0
 inflection==0.5.1
 mypy_extensions==1.1.0
+pydantic==2.12.5
+pydantic_core==2.41.5
 SQLAlchemy==2.0.45
 sqlalchemy-orm==1.2.10
 typing-inspect==0.9.0
+typing-inspection==0.4.2
 typing_extensions==4.15.0
