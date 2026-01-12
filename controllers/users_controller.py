@@ -58,6 +58,11 @@ def update_user(db: Session, user_id: int, user_data: UserUpdate):
 
     return user
 
+def activate_user(db: Session, user_id: int):
+    user = get_user_by_id(db, user_id)
+    user.is_active = True
+    db.commit()
+    return user
 
 def delete_user(db: Session, user_id: int):
     """

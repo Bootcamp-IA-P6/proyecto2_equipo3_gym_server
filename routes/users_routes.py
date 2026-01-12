@@ -46,3 +46,7 @@ def delete_user(
     db: Session = Depends(get_db)
 ):
     return users_controller.delete_user(db, user_id)
+
+@router.patch("/{user_id}/activate", response_model=UserResponse)
+def activate_user(user_id: int, db: Session = Depends(get_db)):
+    return users_controller.activate_user(db, user_id)
