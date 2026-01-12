@@ -12,7 +12,6 @@ app = FastAPI(
     title="Gym Management API"
 )
 
-# OJO Esto crea las tablas la primera vez que se ejecuta la aplicación
-# @app.on_event("startup")
-# def startup():
-#     Base.metadata.create_all(bind=engine)
+@app.on_event("startup")
+def startup():
+    Base.metadata.create_all(bind=engine)
