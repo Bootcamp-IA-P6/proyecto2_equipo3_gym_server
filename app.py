@@ -4,6 +4,7 @@ from database import engine
 from models.base import Base
 from routes.users_routes import router as users_router
 from routes.trainers_routes import router as trainers_router
+from routes.classes_routes import router as classes_router
 
 import models.user
 import models.trainer
@@ -16,6 +17,7 @@ app = FastAPI(
 
 app.include_router(users_router)
 app.include_router(trainers_router)
+app.include_router(classes_router)
 
 @app.on_event("startup")
 def startup():
