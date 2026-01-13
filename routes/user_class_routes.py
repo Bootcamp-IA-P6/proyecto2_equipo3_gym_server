@@ -17,12 +17,19 @@ def get_user_class(
     return user_class_controller.get_all_users_classes(db)
 
 
-@router.get("/clases/{user_id}", response_model=list[UserClassResponse])
+@router.get("/user_classes/{user_id}", response_model=list[UserClassResponse])
 def get_userId_classes(
     user_id: int,
     db: Session = Depends(get_db)
 ):
     return user_class_controller.get_classes_by_userid(db, user_id)
+
+@router.get("/class_users/{class_id}", response_model=list[UserClassResponse])
+def get_classes_userId(
+    class_id: int,
+    db: Session = Depends(get_db)
+):
+    return user_class_controller.get_users_by_classid(db, class_id)
 
 
 @router.post("/", response_model=UserClassResponse, status_code=status.HTTP_201_CREATED)
@@ -34,10 +41,9 @@ def create_user_class(
      return user_class_controller.create_user_class(db, user_class)
 
 
-
-# @router.delete("/{user_id}")
-# def delete_user_class(
-#     user_id: int,
-#     db: Session = Depends(get_db)
-# ):
-#     return users_controller.delete_user(db, user_id)
+@router.delete("/{user_id}")
+def delete_user_class(
+    user_id: int,
+    db: Session = Depends(get_db)
+):
+    return user_class_controller.delete_inscription(db, user_id)
