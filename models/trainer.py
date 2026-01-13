@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy import Column, Integer, String, Boolean, ForeignKey
 from sqlalchemy.orm import relationship
 
 from models.base import Base, TimestampMixin
@@ -9,6 +9,7 @@ class Trainer(Base, TimestampMixin):
     id = Column(Integer, primary_key=True, index=True)
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
     specialty = Column(String(100), nullable=False)
+    is_active = Column(Boolean, default=True)
 
     user = relationship(
         "User",
