@@ -15,7 +15,7 @@ from schemas.gym_class_schema import GymClassCreate, GymClassUpdate, GymClassRes
 
 
 router = APIRouter(
-    prefix="/classes",
+    prefix="/gym-classes",
     tags=["Gym Classes"]
 )
 
