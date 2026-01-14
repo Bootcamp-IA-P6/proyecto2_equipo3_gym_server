@@ -42,8 +42,17 @@ def create_user_class(
 
 
 @router.delete("/{user_id}")
-def delete_user_class(
+def delete_inscripcion(
     user_id: int,
     db: Session = Depends(get_db)
 ):
     return user_class_controller.delete_inscription(db, user_id)
+
+
+@router.delete("/{user_id}/{class_id}")
+def delete_user_class(
+    user_id: int,
+    class_id: int,
+    db: Session = Depends(get_db)
+):
+    return user_class_controller.delete_user_class(db, user_id, class_id)

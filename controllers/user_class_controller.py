@@ -5,6 +5,7 @@ from schemas.user_class_schema import UserClassCreate
 
 from models.user import User
 from models.trainer import Trainer
+from models.gym_class import GymClass
 
 
 def get_all_users_classes(db: Session):
@@ -14,17 +15,31 @@ def get_all_users_classes(db: Session):
     users = db.query(UserClass).all()
     return users
 
+
 def create_user_class(db: Session, user_class_data: UserClassCreate):
     """
     Devuelve las clases a las que está apuntado un usuario.
     """
     # Comprobar si el usuario ya existe
-    existing_user = db.query(User).filter(User.id == user_class_data.id).first()
+    existing_user = db.query(User).filter(User.id == user_class_data.user_id).first()
     if not existing_user:
         raise HTTPException(status_code=400, detail="El usuario no existe")
     
-    # Hacer lo mismo con el id de la clase y el id del trainer
+    existing_class = db.query(GymClass).filter(GymClass.id == user_class_data.class_id).first()
+    if not existing_class:
+        raise HTTPException(status_code=400, detail="La clase no existe")
+    
+    existing_trainer = db.query(Trainer).filter(Trainer.id == user_class_data.trainer_id).first()
+    if not existing_trainer:
+        raise HTTPException(status_code=400, detail="El entrenador no existe")
+    
     # Comprobar si la inscripcion ya existe.
+    existing_user_class = db.query(UserClass).filter(
+        UserClass.user_id == user_class_data.user_id, 
+        UserClass.class_id == user_class_data.class_id
+        ).first()
+    if existing_user_class:
+        raise HTTPException(status_code=400, detail="El usuario ya está apuntado a esta clase")
 
     new_user_class = UserClass(
         user_id=user_class_data.user_id,
@@ -37,6 +52,7 @@ def create_user_class(db: Session, user_class_data: UserClassCreate):
     db.refresh(new_user_class)
 
     return new_user_class
+
 
 def get_classes_by_userid(db: Session, user_id: int):
     """
@@ -54,18 +70,18 @@ def get_classes_by_userid(db: Session, user_id: int):
 
     return user_classes
 
-# Cuando suban elcontrolador de las clases
+
 def get_users_by_classid(db: Session, class_id: int):
     """
     Devuelve las clases a las que está apuntado un usuario.
     """
-    # user = db.query(User).filter(User.id == user_id).first()
+    gymclass = db.query(GymClass).filter(GymClass.id == class_id).first()
 
-    # if not user:
-    #     raise HTTPException(
-    #         status_code=404,
-    #         detail="Usuario no encontrado"
-    #     )
+    if not gymclass:
+        raise HTTPException(
+            status_code=404,
+            detail="Clase no encontrada"
+        )
 
     class_users = db.query(UserClass).filter(UserClass.class_id == class_id).all()
     
@@ -83,3 +99,18 @@ def delete_inscription(db: Session, user_id: int):
         return {"message": "inscripcion borrada correctamente"}
     
     return {"message": "El usuario no está inscrito a ninguna clase"}
+
+
+def delete_user_class(db: Session, user_id: int, class_id: int):
+    """
+    Borra un usuario y de una clase a la que esta inscrito.
+    """
+    row = db.query(UserClass).filter(
+        UserClass.user_id == user_id, 
+        UserClass.class_id == class_id).delete()
+
+    if row:
+        db.commit()
+        return {"message": "Usuario borrado de esta clase correctamente"}
+    
+    return {"message": "El usuario no está inscrito a esta clase"}
