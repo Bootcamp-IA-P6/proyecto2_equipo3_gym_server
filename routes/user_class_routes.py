@@ -41,7 +41,7 @@ def create_user_class(
      return user_class_controller.create_user_class(db, user_class)
 
 
-@router.delete("/{user_id}")
+@router.delete("/user_inscription/{user_id}")
 def delete_inscripcion(
     user_id: int,
     db: Session = Depends(get_db)
@@ -49,7 +49,7 @@ def delete_inscripcion(
     return user_class_controller.delete_inscription(db, user_id)
 
 
-@router.delete("/{user_id}/{class_id}")
+@router.delete("/user_class/{user_id}/{class_id}")
 def delete_user_class(
     user_id: int,
     class_id: int,
