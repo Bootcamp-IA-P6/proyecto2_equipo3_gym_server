@@ -1,6 +1,8 @@
 from sqlalchemy.orm import Session
 from models.trainer import Trainer
 from schemas.trainer_schema import TrainerCreate, TrainerUpdate
+from config.exceptions import NotFoundException, InvalidDataException
+
 
 def create_trainer(db: Session, payload: TrainerCreate) -> Trainer:
     trainer = Trainer(
@@ -15,16 +17,27 @@ def create_trainer(db: Session, payload: TrainerCreate) -> Trainer:
 
     return trainer
 
+
 def get_all_trainers(db: Session) -> list[Trainer]:
     return db.query(Trainer).all()
 
-def get_trainer_by_id(db: Session, trainer_id: int) -> Trainer | None:
-    return db.query(Trainer).filter(Trainer.id == trainer_id).first()
 
-def update_trainer_specialty( db: Session, trainer_id: int, payload: TrainerUpdate) -> Trainer | None:
-    trainer = get_trainer_by_id(db, trainer_id)
+def get_trainer_by_id(db: Session, trainer_id: int) -> Trainer:
+    trainer = db.query(Trainer).filter(Trainer.id == trainer_id).first()
+
     if not trainer:
-        return None
+        raise NotFoundException("Entrenador no encontrado")
+
+    return trainer
+
+
+def update_trainer_specialty(
+    db: Session,
+    trainer_id: int,
+    payload: TrainerUpdate
+) -> Trainer:
+    trainer = get_trainer_by_id(db, trainer_id)
+
     if payload.specialty is not None:
         trainer.specialty = payload.specialty
 
@@ -33,16 +46,19 @@ def update_trainer_specialty( db: Session, trainer_id: int, payload: TrainerUpda
 
     return trainer
 
-def set_trainer_active_status( db: Session, trainer_id: int, is_active: bool) -> Trainer | None:
+
+def set_trainer_active_status(
+    db: Session,
+    trainer_id: int,
+    is_active: bool
+) -> Trainer:
     trainer = get_trainer_by_id(db, trainer_id)
 
-    if not trainer:
-        return None
-
-     # No se puede activar un trainer sin usuario
     if is_active and not trainer.user_id:
-        raise ValueError("No es posible activar el entrenador si no tiene un usuario asociado")
-    
+        raise InvalidDataException(
+            "No es posible activar el entrenador si no tiene un usuario asociado"
+        )
+
     trainer.is_active = is_active
 
     db.commit()
@@ -50,22 +66,22 @@ def set_trainer_active_status( db: Session, trainer_id: int, is_active: bool) ->
 
     return trainer
 
-def delete_trainer(db: Session, trainer_id: int) -> Trainer | None:
+
+def delete_trainer(db: Session, trainer_id: int) -> Trainer:
     """
     Soft delete: deactivate trainer
     Rule: cannot delete trainer with active classes
     """
     trainer = get_trainer_by_id(db, trainer_id)
 
-    if not trainer:
-        return None
-
-    # No se puede eliminar si tiene al menos una clase activa
-    has_active_classes = any( user_class.is_active for user_class in trainer.classes)
+    has_active_classes = any(
+        user_class.is_active for user_class in trainer.classes
+    )
 
     if has_active_classes:
-        raise ValueError(
-            "No se puede eliminar el entrenador porque tiene clases activas")
+        raise InvalidDataException(
+            "No se puede eliminar el entrenador porque tiene clases activas"
+        )
 
     trainer.is_active = False
 

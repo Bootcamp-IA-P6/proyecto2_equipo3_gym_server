@@ -14,6 +14,7 @@ from controllers.classes_controller import (
 from schemas.gym_class_schema import GymClassCreate, GymClassUpdate, GymClassResponse
 
 
+
 router = APIRouter(
     prefix="/gym-classes",
     tags=["Gym Classes"]
@@ -35,6 +36,7 @@ def get_class(class_id: int, db: Session = Depends(get_db)):
     gym_class = get_class_by_id(db, class_id)
     if not gym_class:
         raise HTTPException(status_code=404, detail="Class not found")
+        
     return gym_class
 
 
@@ -43,6 +45,7 @@ def update(class_id: int, class_data: GymClassUpdate, db: Session = Depends(get_
     gym_class = update_class(db, class_id, class_data)
     if not gym_class:
         raise HTTPException(status_code=404, detail="Class not found")
+        
     return gym_class
 
 
@@ -51,4 +54,5 @@ def delete(class_id: int, db: Session = Depends(get_db)):
     gym_class = delete_class(db, class_id)
     if not gym_class:
         raise HTTPException(status_code=404, detail="Class not found")
+       
     return gym_class

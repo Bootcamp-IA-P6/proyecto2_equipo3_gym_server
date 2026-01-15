@@ -3,6 +3,7 @@ from sqlalchemy.orm import Session
 from database.database import get_db
 from schemas.trainer_schema import TrainerCreate, TrainerUpdate, TrainerResponse
 from controllers import trainers_controller
+from config.exceptions import AppException, NotFoundException,InvalidDataException
 
 router = APIRouter(
     prefix="/trainers",
@@ -45,6 +46,7 @@ def update_trainer_specialty(
     if not trainer:
         raise HTTPException( 
             status_code=status.HTTP_404_NOT_FOUND, detail="Entrenador no encontrado")
+     
     return trainer
 
 @router.patch( "/{trainer_id}/active", response_model=TrainerResponse)
@@ -61,6 +63,7 @@ def set_trainer_active_status(
     if not trainer:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail="Entrenador no encontrado")
+       
     return trainer
 
 @router.delete( "/{trainer_id}", response_model=TrainerResponse)
@@ -77,6 +80,7 @@ def delete_trainer(
     if not trainer:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail="Entrenador no encontrado")
+        
 
     return trainer
 
