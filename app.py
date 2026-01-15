@@ -7,6 +7,7 @@ from config.exceptions import AppException, NotFoundException,InvalidDataExcepti
 from database import engine
 from models.base import Base
 from routes.users_routes import router as users_router
+from routes.user_class_routes import router as user_class_router
 from routes.trainers_routes import router as trainers_router
 from routes.classes_routes import router as classes_router
 
@@ -20,6 +21,7 @@ app = FastAPI(
 )
 
 app.include_router(users_router)
+app.include_router(user_class_router)
 app.include_router(trainers_router)
 app.include_router(classes_router)
 
