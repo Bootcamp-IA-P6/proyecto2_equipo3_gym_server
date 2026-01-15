@@ -6,6 +6,7 @@ from controllers import users_controller
 from schemas.user_schema import UserCreate, UserUpdate, UserResponse
 
 
+
 router = APIRouter (
     prefix="/users",
     tags= {"Users"} #para Swagger (orden y nombre bonito)

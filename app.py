@@ -1,4 +1,8 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request 
+from fastapi.responses import JSONResponse
+
+from config.exceptions import AppException, NotFoundException,InvalidDataException
+
 
 from database import engine
 from models.base import Base
@@ -30,3 +34,26 @@ app.include_router(classes_router)
 def startup():
     logger.info("Application started")
     Base.metadata.create_all(bind=engine)
+
+#Handler global único
+@app.exception_handler(AppException)
+async def app_exception_handler(request: Request, exc: AppException):
+    # Definir status code y tipo de error según el tipo de excepción
+    if isinstance(exc, NotFoundException):
+        status_code = 404
+        error_type = "NotFound"
+    elif isinstance(exc, InvalidDataException):
+        status_code = 400
+        error_type = "InvalidData"
+    else:
+        status_code = 400
+        error_type = "ApplicationError"
+
+    return JSONResponse(
+        status_code=status_code,
+        content={
+            "success": False,
+            "error": error_type,
+            "message": exc.message  # tu exceptions.py usa self.message
+        }
+    )
