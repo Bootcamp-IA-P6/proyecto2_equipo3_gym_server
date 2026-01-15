@@ -2,6 +2,8 @@ from sqlalchemy.orm import Session
 from fastapi import HTTPException
 from models.user import User
 from schemas.user_schema import UserCreate, UserUpdate
+from core.security import hash_password
+
 
 def create_user( db: Session, user_data: UserCreate):
     # 1️⃣ Comprobar si el email ya existe
@@ -12,7 +14,7 @@ def create_user( db: Session, user_data: UserCreate):
         name=user_data.name,
         last_name=user_data.last_name,
         email=user_data.email,
-        password_hash=user_data.password,
+        password_hash=hash_password(user_data.password),
         role=user_data.role
     )
 
