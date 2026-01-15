@@ -1,4 +1,4 @@
-#En este archivo vamos a observar que tipo de error ocurrio 
+#En este archivo vamos a observar que tipo de error ocurrio, por ende solo lo definimos
 # config/exceptions.py
 
 class AppException(Exception):

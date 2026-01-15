@@ -12,8 +12,7 @@ from controllers.classes_controller import (
     delete_class
 )
 from schemas.gym_class_schema import GymClassCreate, GymClassUpdate, GymClassResponse
-from config.exceptions import AppException, NotFoundException,InvalidDataException # Colocar clases 
-#cuando se suban los tests que faltan 
+
 
 
 router = APIRouter(
@@ -36,8 +35,8 @@ def list_classes(db: Session = Depends(get_db)):
 def get_class(class_id: int, db: Session = Depends(get_db)):
     gym_class = get_class_by_id(db, class_id)
     if not gym_class:
-        #raise HTTPException(status_code=404, detail="Class not found")
-        raise NotFoundException("Clase no encontrada")  # <-- Handler centralizado
+        raise HTTPException(status_code=404, detail="Class not found")
+        
     return gym_class
 
 
@@ -45,8 +44,8 @@ def get_class(class_id: int, db: Session = Depends(get_db)):
 def update(class_id: int, class_data: GymClassUpdate, db: Session = Depends(get_db)):
     gym_class = update_class(db, class_id, class_data)
     if not gym_class:
-        #raise HTTPException(status_code=404, detail="Class not found")
-        raise NotFoundException("Clase no encontrada")  # <-- Handler centralizado
+        raise HTTPException(status_code=404, detail="Class not found")
+        
     return gym_class
 
 
@@ -54,6 +53,6 @@ def update(class_id: int, class_data: GymClassUpdate, db: Session = Depends(get_
 def delete(class_id: int, db: Session = Depends(get_db)):
     gym_class = delete_class(db, class_id)
     if not gym_class:
-        #raise HTTPException(status_code=404, detail="Class not found")
-        raise NotFoundException("Clase no encontrada")  # <-- Handler centralizado
+        raise HTTPException(status_code=404, detail="Class not found")
+       
     return gym_class

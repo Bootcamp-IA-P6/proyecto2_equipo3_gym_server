@@ -27,38 +27,25 @@ app.include_router(classes_router)
 def startup():
     Base.metadata.create_all(bind=engine)
 
-@app.exception_handler(NotFoundException) # recurso no encontrado 404
-async def not_found_exception_handler(
-    request: Request,
-    exc: NotFoundException
-):
-    return JSONResponse(
-        status_code=404,
-        content={
-            "error": "NotFound",
-            "message": exc.message
-        }
-    )
-
-@app.exception_handler(InvalidDataException) #Datos invalidos 400 
-async def invalid_data_exception_handler(
-    request: Request,
-    exc: InvalidDataException
-):
-    return JSONResponse(
-        status_code=400,
-        content={
-            "error": "InvalidData",
-            "message": exc.message
-        }
-    )
-# Handler base para cualquier otra AppException → 400
+#Handler global único
 @app.exception_handler(AppException)
 async def app_exception_handler(request: Request, exc: AppException):
+    # Definir status code y tipo de error según el tipo de excepción
+    if isinstance(exc, NotFoundException):
+        status_code = 404
+        error_type = "NotFound"
+    elif isinstance(exc, InvalidDataException):
+        status_code = 400
+        error_type = "InvalidData"
+    else:
+        status_code = 400
+        error_type = "ApplicationError"
+
     return JSONResponse(
-        status_code=400,
+        status_code=status_code,
         content={
-            "error": "ApplicationError",
-            "message": exc.message
+            "success": False,
+            "error": error_type,
+            "message": exc.message  # tu exceptions.py usa self.message
         }
     )

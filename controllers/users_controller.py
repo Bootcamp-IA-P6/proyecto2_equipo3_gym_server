@@ -1,13 +1,16 @@
 from sqlalchemy.orm import Session
-from fastapi import HTTPException
 from models.user import User
 from schemas.user_schema import UserCreate, UserUpdate
+from config.exceptions import NotFoundException, InvalidDataException
 
-def create_user( db: Session, user_data: UserCreate):
-    # 1️⃣ Comprobar si el email ya existe
+
+def create_user(db: Session, user_data: UserCreate):
+    # Comprobar si el email ya existe
     existing_user = db.query(User).filter(User.email == user_data.email).first()
+
     if existing_user:
-        raise HTTPException(status_code=400, detail="El email ya está registrado")
+        raise InvalidDataException("El email ya está registrado")
+
     new_user = User(
         name=user_data.name,
         last_name=user_data.last_name,
@@ -21,13 +24,14 @@ def create_user( db: Session, user_data: UserCreate):
     db.refresh(new_user)
 
     return new_user
-    
+
+
 def get_all_users(db: Session):
     """
     Devuelve todos los usuarios activos.
     """
-    users = db.query(User).filter(User.is_active == True).all()
-    return users
+    return db.query(User).filter(User.is_active == True).all()
+
 
 def get_user_by_id(db: Session, user_id: int):
     """
@@ -36,12 +40,10 @@ def get_user_by_id(db: Session, user_id: int):
     user = db.query(User).filter(User.id == user_id).first()
 
     if not user:
-        raise HTTPException(
-            status_code=404,
-            detail="Usuario no encontrado"
-        )
+        raise NotFoundException("Usuario no encontrado")
 
     return user
+
 
 def update_user(db: Session, user_id: int, user_data: UserUpdate):
     """
@@ -49,7 +51,6 @@ def update_user(db: Session, user_id: int, user_data: UserUpdate):
     """
     user = get_user_by_id(db, user_id)
 
-    # Recorremos solo los campos que vienen en el body
     for field, value in user_data.dict(exclude_unset=True).items():
         setattr(user, field, value)
 
@@ -58,11 +59,14 @@ def update_user(db: Session, user_id: int, user_data: UserUpdate):
 
     return user
 
+
 def activate_user(db: Session, user_id: int):
     user = get_user_by_id(db, user_id)
     user.is_active = True
     db.commit()
+    db.refresh(user)
     return user
+
 
 def delete_user(db: Session, user_id: int):
     """
@@ -70,7 +74,8 @@ def delete_user(db: Session, user_id: int):
     """
     user = get_user_by_id(db, user_id)
 
-    user.is_active = False # si lo ponemos asi realmente no borra el ususario si no que lo desactiva
+    user.is_active = False
     db.commit()
+    db.refresh(user)
 
     return {"message": "Usuario desactivado correctamente"}
