@@ -17,7 +17,15 @@ import models.gym_class
 import models.user_class
 
 app = FastAPI(
-    title="Gym Management API"
+    title="Portal Admin API",
+    description="API para la gestión interna del Gym solo Admin.",
+    version="1.0.0",
+    openapi_tags=[
+        {
+            "name": "Users",
+            "description": "Gestión completa de usuarios/empleados. Solo Admin."
+        }
+    ]
 )
 
 app.include_router(users_router)
