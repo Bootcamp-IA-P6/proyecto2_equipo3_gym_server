@@ -1,6 +1,6 @@
 from fastapi import status
 
-# Test de integración que necesita primero tener creado un usuario, una clase y un entrenador.
+# INICIO Test de integración que necesita primero tener creado un usuario, una clase y un entrenador.
 #Crear el usuario
 def test_create_user_juan(client):
     response = client.post(
@@ -54,7 +54,7 @@ def test_create_user_class_juan(client):
 
 # FIN Test de integración que necesita primero tener creado un usuario, una clase y un entrenador.
 
-# Tests de integración 
+# Tests de integración de obtener todas las filas
 def test_get(client):
     response = client.get("/user_class")
     
@@ -62,17 +62,32 @@ def test_get(client):
     assert isinstance(response.json(), list)
     assert len(response.json()) >= 1
 
-def test_get_user_by_user_id(client):
+# Tests de integración de obtener todas las clases de un usuario
+def test_get_by_user_id(client):
     response = client.get("/user_class/user_classes/1")
     
     assert response.status_code == 200
     assert isinstance(response.json(), list)
     assert len(response.json()) >= 1
 
-def test_get_user_by_class_id(client):
+# Tests de integración de obtener todos los usuarios de una clase
+def test_get_by_class_id(client):
     response = client.get("/user_class/class_users/1")
     
     assert response.status_code == 200
     assert isinstance(response.json(), list)
     assert len(response.json()) >= 1
 
+# Tests de integración de borrar a un usuario de una clase en concreto
+def test_delete_user_class(client):
+    response = client.delete("/user_class/user_class/1/1")
+    
+    assert response.status_code == 200
+    assert response.json() == {"message": "Usuario borrado de esta clase correctamente"}
+
+#  Tests de integración de borrar una inscripción (todas las clases de un usuario)
+def test_delete_user_inscription(client):
+    response = client.delete("/user_class/user_inscription/1")
+    
+    assert response.status_code == 200
+    assert response.json() == {"message": "El usuario no está inscrito a ninguna clase"}
