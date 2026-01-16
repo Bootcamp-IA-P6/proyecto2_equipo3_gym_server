@@ -1,10 +1,13 @@
 from sqlalchemy.orm import Session
 from models.user import User
 from schemas.user_schema import UserCreate, UserUpdate
+from core.security import hash_password
+
 from config.exceptions import NotFoundException, InvalidDataException
 from config.logger import get_logger
 
 logger = get_logger(__name__)
+
 
 def create_user(db: Session, user_data: UserCreate):
     logger.info(f"Intentando registrar nuevo usuario con email: {user_data.email}")
@@ -20,7 +23,7 @@ def create_user(db: Session, user_data: UserCreate):
         name=user_data.name,
         last_name=user_data.last_name,
         email=user_data.email,
-        password_hash=user_data.password,
+        password_hash=hash_password(user_data.password),
         role=user_data.role
     )
 

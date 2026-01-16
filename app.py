@@ -10,6 +10,8 @@ from routes.users_routes import router as users_router
 from routes.user_class_routes import router as user_class_router
 from routes.trainers_routes import router as trainers_router
 from routes.classes_routes import router as classes_router
+from routes.auth_routes import router as auth_router
+
 from config.logger import setup_logger, get_logger
 
 import models.user
@@ -29,6 +31,7 @@ app.include_router(users_router)
 app.include_router(user_class_router)
 app.include_router(trainers_router)
 app.include_router(classes_router)
+app.include_router(auth_router)
 
 @app.on_event("startup")
 def startup():
