@@ -123,13 +123,15 @@ def get_all_users_classes_to_csv(db: Session):
     """
     users = db.query(UserClass).all()
 
-    list_objects_to_csv(users)
+    if list_objects_to_csv(db, users):
+        #return users
+        #return {"message": "DataFrame guardado exitosamente en " + nombre_archivo_csv}
+        return {"message": "DataFrame guardado exitosamente en docs/csv/"}
+    else:
+        return {"message": "DataFrame No Guardado, hubo algún problema"}
+    
 
-    #return users
-    #return {"message": "DataFrame guardado exitosamente en " + nombre_archivo_csv}
-    return {"message": "DataFrame guardado exitosamente en"}
-
-def list_objects_to_csv(list_user_class: list[UserClass]):
+def list_objects_to_csv(db: Session, list_user_class: list[UserClass]):
     # Lista de user_class vacia
     users_class = []
 
@@ -138,14 +140,29 @@ def list_objects_to_csv(list_user_class: list[UserClass]):
         user_aux = {
             "id": 0,
             "user_id": 0,
+            "user_name": "",
             "class_id": 0,
-            "trainer_id": 0
+            "class_name": "",
+            "trainer_id": 0,
+            "trainer_name": ""
         }
 
         user_aux['id'] = user.id
+
         user_aux['user_id'] = user.user_id
+        # Busca el nombre de usuario
+        user_find = db.query(User).filter(User.id == user.user_id).first()
+        user_aux['user_name'] = user_find.name
+
         user_aux['class_id'] = user.class_id
+        # Busca el nombre de la clase
+        class_find = db.query(GymClass).filter(GymClass.id == user.class_id).first()
+        user_aux['class_name'] = class_find.name
+
         user_aux['trainer_id'] = user.trainer_id
+        # Busca el nombre del entrenador
+        trainer_find = db.query(User).filter(User.id == user.trainer_id).first()
+        user_aux['class_name'] = trainer_find.name
 
         users_class.append(user_aux)
 
@@ -153,5 +170,9 @@ def list_objects_to_csv(list_user_class: list[UserClass]):
 
     nombre_archivo_csv = 'datos_ejemplo.csv'
     df_users.to_csv('docs/csv/' + nombre_archivo_csv, index=False, encoding='utf-8')
-    
-    return True
+    # sep=';'
+
+    if df_users.empty:
+        return False
+    else:
+        return True

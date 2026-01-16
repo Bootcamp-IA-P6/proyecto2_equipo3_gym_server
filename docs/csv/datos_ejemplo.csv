@@ -1,4 +1,4 @@
-id,user_id,class_id,trainer_id
-2,1,1,3
-3,4,1,3
-7,4,3,2
+id,user_id,user_name,class_id,class_name,trainer_id,trainer_name
+2,1,Gema,1,Pablo,3,
+3,4,Jorge,1,Pablo,3,
+7,4,Jorge,3,Ana María,2,
