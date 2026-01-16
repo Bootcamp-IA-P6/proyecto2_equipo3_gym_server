@@ -42,12 +42,17 @@ async def app_exception_handler(request: Request, exc: AppException):
     if isinstance(exc, NotFoundException):
         status_code = 404
         error_type = "NotFound"
+        # Logueamos como warning porque es un error del usuario (pidió algo que no existe)
+        logger.warning(f"Recurso no encontrado: {exc.message}")
     elif isinstance(exc, InvalidDataException):
         status_code = 400
         error_type = "InvalidData"
+        logger.warning(f"Datos inválidos recibidos: {exc.message}")
     else:
         status_code = 400
         error_type = "ApplicationError"
+        # Logueamos como error porque es algo inesperado de la app
+        logger.error(f"Error de aplicación: {exc.message}")
 
     return JSONResponse(
         status_code=status_code,
