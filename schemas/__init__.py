@@ -21,3 +21,4 @@ from schemas.user_class_schema import (
     UserClassCreate,
     UserClassResponse
 )
+from schemas.auth_schemas import LoginRequest, TokenResponse
