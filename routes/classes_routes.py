@@ -12,6 +12,7 @@ from controllers.classes_controller import (
     delete_class
 )
 from schemas.gym_class_schema import GymClassCreate, GymClassUpdate, GymClassResponse
+from core.dependencies import require_role
 
 
 
@@ -21,17 +22,17 @@ router = APIRouter(
 )
 
 
-@router.post("/", response_model=GymClassResponse)
+@router.post("/", dependencies=[Depends(require_role(["admin"]))], response_model=GymClassResponse)
 def create(gym_class: GymClassCreate, db: Session = Depends(get_db)):
     return create_class(db, gym_class)
 
 
-@router.get("/", response_model=List[GymClassResponse])
+@router.get("/", dependencies=[Depends(require_role(["admin", "trainer", "user"]))], response_model=List[GymClassResponse])
 def list_classes(db: Session = Depends(get_db)):
     return get_classes(db)
 
 
-@router.get("/{class_id}", response_model=GymClassResponse)
+@router.get("/{class_id}", dependencies=[Depends(require_role(["admin", "trainer", "user"]))], response_model=GymClassResponse)
 def get_class(class_id: int, db: Session = Depends(get_db)):
     gym_class = get_class_by_id(db, class_id)
     if not gym_class:
@@ -40,7 +41,7 @@ def get_class(class_id: int, db: Session = Depends(get_db)):
     return gym_class
 
 
-@router.put("/{class_id}", response_model=GymClassResponse)
+@router.put("/{class_id}", dependencies=[Depends(require_role(["admin"]))], response_model=GymClassResponse)
 def update(class_id: int, class_data: GymClassUpdate, db: Session = Depends(get_db)):
     gym_class = update_class(db, class_id, class_data)
     if not gym_class:
@@ -49,7 +50,7 @@ def update(class_id: int, class_data: GymClassUpdate, db: Session = Depends(get_
     return gym_class
 
 
-@router.delete("/{class_id}", response_model=GymClassResponse)
+@router.delete("/{class_id}",  dependencies=[Depends(require_role(["admin"]))],response_model=GymClassResponse)
 def delete(class_id: int, db: Session = Depends(get_db)):
     gym_class = delete_class(db, class_id)
     if not gym_class:
