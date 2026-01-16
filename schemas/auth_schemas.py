@@ -4,7 +4,7 @@ class LoginRequest(BaseModel):
     email: EmailStr
     password: str
     
-class TockenResponse(BaseModel):
-    access_tocken: str
+class TokenResponse(BaseModel):
+    access_token: str
     token_type: str= "bearer"
     role: str
