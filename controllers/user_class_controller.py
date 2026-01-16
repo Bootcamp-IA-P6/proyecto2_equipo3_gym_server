@@ -7,6 +7,8 @@ from models.user import User
 from models.trainer import Trainer
 from models.gym_class import GymClass
 
+import pandas as pd
+
 
 def get_all_users_classes(db: Session):
     """
@@ -114,3 +116,42 @@ def delete_user_class(db: Session, user_id: int, class_id: int):
         return {"message": "Usuario borrado de esta clase correctamente"}
     
     return {"message": "El usuario no está inscrito a esta clase"}
+
+def get_all_users_classes_to_csv(db: Session):
+    """
+    Devuelve todos los usuarios, clases y profesores y los exporta a un archivo csv.
+    """
+    users = db.query(UserClass).all()
+
+    list_objects_to_csv(users)
+
+    #return users
+    #return {"message": "DataFrame guardado exitosamente en " + nombre_archivo_csv}
+    return {"message": "DataFrame guardado exitosamente en"}
+
+def list_objects_to_csv(list_user_class: list[UserClass]):
+    # Lista de user_class vacia
+    users_class = []
+
+    for user in list_user_class:
+        # Usuario vacio
+        user_aux = {
+            "id": 0,
+            "user_id": 0,
+            "class_id": 0,
+            "trainer_id": 0
+        }
+
+        user_aux['id'] = user.id
+        user_aux['user_id'] = user.user_id
+        user_aux['class_id'] = user.class_id
+        user_aux['trainer_id'] = user.trainer_id
+
+        users_class.append(user_aux)
+
+    df_users = pd.DataFrame(users_class)
+
+    nombre_archivo_csv = 'datos_ejemplo.csv'
+    df_users.to_csv('docs/csv/' + nombre_archivo_csv, index=False, encoding='utf-8')
+    
+    return True
