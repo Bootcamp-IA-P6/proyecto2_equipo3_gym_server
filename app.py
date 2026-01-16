@@ -12,11 +12,16 @@ from routes.trainers_routes import router as trainers_router
 from routes.classes_routes import router as classes_router
 from routes.auth_routes import router as auth_router
 
+from config.logger import setup_logger, get_logger
 
 import models.user
 import models.trainer
 import models.gym_class
 import models.user_class
+
+
+setup_logger()
+logger = get_logger("app")
 
 app = FastAPI(
     title="Gym Management API"
@@ -30,6 +35,7 @@ app.include_router(auth_router)
 
 @app.on_event("startup")
 def startup():
+    logger.info("Application started")
     Base.metadata.create_all(bind=engine)
 
 #Handler global único
@@ -39,12 +45,17 @@ async def app_exception_handler(request: Request, exc: AppException):
     if isinstance(exc, NotFoundException):
         status_code = 404
         error_type = "NotFound"
+        # Logueamos como warning porque es un error del usuario (pidió algo que no existe)
+        logger.warning(f"Recurso no encontrado: {exc.message}")
     elif isinstance(exc, InvalidDataException):
         status_code = 400
         error_type = "InvalidData"
+        logger.warning(f"Datos inválidos recibidos: {exc.message}")
     else:
         status_code = 400
         error_type = "ApplicationError"
+        # Logueamos como error porque es algo inesperado de la app
+        logger.error(f"Error de aplicación: {exc.message}")
 
     return JSONResponse(
         status_code=status_code,
