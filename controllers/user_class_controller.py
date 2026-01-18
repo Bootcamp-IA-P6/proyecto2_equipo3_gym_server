@@ -146,6 +146,7 @@ def delete_user_class(db: Session, user_id: int, class_id: int):
         logger.info(f"Usuario {user_id} eliminado de la clase {class_id}")
         return {"message": "Usuario borrado de esta clase correctamente"}
     
+    logger.warning(f"Fallo al borrar: El usuario {user_id} no estaba en la clase {class_id}")
     return {"message": "El usuario no está inscrito a esta clase"}
 
 def get_all_users_classes_to_csv(db: Session):
@@ -208,5 +209,4 @@ def list_objects_to_csv(db: Session, list_user_class: list[UserClass]):
     else:
         return True
 
-    #logger.warning(f"Fallo al borrar: El usuario {user_id} no estaba en la clase {class_id}")
-    #return {"message": "El usuario no está inscrito a esta clase"}
+
