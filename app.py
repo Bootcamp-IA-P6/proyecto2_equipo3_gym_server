@@ -1,8 +1,7 @@
 from fastapi import FastAPI, Request 
 from fastapi.responses import JSONResponse
-
+from config.logger import setup_logger, get_logger
 from config.exceptions import AppException, NotFoundException,InvalidDataException
-
 
 from database import engine
 from models.base import Base
@@ -12,7 +11,6 @@ from routes.trainers_routes import router as trainers_router
 from routes.classes_routes import router as classes_router
 from routes.auth_routes import router as auth_router
 
-from config.logger import setup_logger, get_logger
 
 import models.user
 import models.trainer
