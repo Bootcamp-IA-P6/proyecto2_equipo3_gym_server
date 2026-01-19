@@ -11,7 +11,8 @@ from config.logger import get_logger
 from utils.utils_csv import file_name_csv, list_objects_to_csv
 
 import pandas as pd
-#import datetime
+from fastapi.responses import FileResponse
+import os
 
 logger = get_logger(__name__)
 
@@ -170,5 +171,16 @@ def get_all_users_classes_to_csv(db: Session):
     else:
         return {"message": "DataFrame No Guardado, hubo algún problema"}
     
+def get_download_file_csv():
 
+    # @app.get("/download-image/{image_name}")
+    # async def download_image(image_name: str):
+    #     file_path = os.path.join("images", image_name) # Ruta al archivo
+    #     return FileResponse(path=file_path, filename=image_name)
+
+    file_path = os.path.join("docs\csv", "datos_ejemplo.csv") # Ruta al archivo
+    print(f"File Path: {file_path}")
+
+    #return {"message": "DownLoad"}
+    return FileResponse(path=file_path, filename="datos_ejemplo.csv")
 
