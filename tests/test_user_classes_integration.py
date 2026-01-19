@@ -80,7 +80,7 @@ def test_get_by_class_id(client):
 
 # Tests de integración de borrar a un usuario de una clase en concreto
 def test_delete_user_class(client):
-    response = client.delete("/user_class/user_class/1/1")
+    response = client.delete("/user_class/1/1")
     
     assert response.status_code == 200
     assert response.json() == {"message": "Usuario borrado de esta clase correctamente"}

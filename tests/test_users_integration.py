@@ -4,7 +4,7 @@ def test_create_user(client):
         json={
             "name": "Ana",
             "last_name": "García",
-            "email": "ana@test.com",
+            "email": "ana_integration@test.com",
             "password": "123456",
             "role": "user"
         }
@@ -13,7 +13,7 @@ def test_create_user(client):
     assert response.status_code == 200
 
     data = response.json()
-    assert data["email"] == "ana@test.com"
+    assert data["email"] == "ana_integration@test.com"
     assert data["is_active"] is True
     
 def test_get_all_users(client):
