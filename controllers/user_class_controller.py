@@ -8,7 +8,10 @@ from models.trainer import Trainer
 from models.gym_class import GymClass
 from config.logger import get_logger
 
+from utils.utils_csv import file_name_csv, list_objects_to_csv
+
 import pandas as pd
+#import datetime
 
 logger = get_logger(__name__)
 
@@ -120,15 +123,22 @@ def delete_inscription(db: Session, user_id: int):
     """
     logger.info(f"Borrando todas las inscripciones del usuario ID: {user_id}")
     
-    rows = db.query(UserClass).filter(UserClass.user_id == user_id).delete()
+    #rows = db.query(UserClass).filter(UserClass.user_id == user_id).delete()
+    rows_csv = db.query(UserClass).filter(UserClass.user_id == user_id).all()
 
-    if rows:
-        db.commit()
-        logger.info(f"Se han eliminado {rows} inscripciones para el usuario {user_id}")
-        return {"message": "inscripcion borrada correctamente"}
+    if list_objects_to_csv(db, rows_csv, str(user_id)):
+        if rows_csv:
+        #if rows:
+            #db.commit()
+            logger.info(f"Se han eliminado {rows_csv} inscripciones para el usuario {user_id}")
+            #logger.info(f"Se han eliminado {rows} inscripciones para el usuario {user_id}")
+            return {"message": "inscripcion borrada correctamente"}
+        
+        logger.warning(f"Intento de borrar inscripciones: El usuario {user_id} no tenía ninguna")
+        return {"message": "El usuario no está inscrito a ninguna clase"}
     
-    logger.warning(f"Intento de borrar inscripciones: El usuario {user_id} no tenía ninguna")
-    return {"message": "El usuario no está inscrito a ninguna clase"}
+    logger.warning(f"Intento de crear fichero csv inscripciones: El usuario {user_id} no tenía ninguna")
+    return {"message": "Hubo algún error al crear el DataFramefichero csv"}
 
 
 def delete_user_class(db: Session, user_id: int, class_id: int):
@@ -155,58 +165,10 @@ def get_all_users_classes_to_csv(db: Session):
     """
     users = db.query(UserClass).all()
 
-    if list_objects_to_csv(db, users):
-        #return users
-        #return {"message": "DataFrame guardado exitosamente en " + nombre_archivo_csv}
+    if list_objects_to_csv(db, users, "all"):
         return {"message": "DataFrame guardado exitosamente en docs/csv/"}
     else:
         return {"message": "DataFrame No Guardado, hubo algún problema"}
     
-
-def list_objects_to_csv(db: Session, list_user_class: list[UserClass]):
-    # Lista de user_class vacia
-    users_class = []
-
-    for user in list_user_class:
-        # Usuario vacio
-        user_aux = {
-            "id": 0,
-            "user_id": 0,
-            "user_name": "",
-            "class_id": 0,
-            "class_name": "",
-            "trainer_id": 0,
-            "trainer_name": ""
-        }
-
-        user_aux['id'] = user.id
-
-        user_aux['user_id'] = user.user_id
-        # Busca el nombre de usuario
-        user_find = db.query(User).filter(User.id == user.user_id).first()
-        user_aux['user_name'] = user_find.name
-
-        user_aux['class_id'] = user.class_id
-        # Busca el nombre de la clase
-        class_find = db.query(GymClass).filter(GymClass.id == user.class_id).first()
-        user_aux['class_name'] = class_find.name
-
-        user_aux['trainer_id'] = user.trainer_id
-        # Busca el nombre del entrenador
-        trainer_find = db.query(User).filter(User.id == user.trainer_id).first()
-        user_aux['class_name'] = trainer_find.name
-
-        users_class.append(user_aux)
-
-    df_users = pd.DataFrame(users_class)
-
-    nombre_archivo_csv = 'datos_ejemplo.csv'
-    df_users.to_csv('docs/csv/' + nombre_archivo_csv, index=False, encoding='utf-8')
-    # sep=';'
-
-    if df_users.empty:
-        return False
-    else:
-        return True
 
 
