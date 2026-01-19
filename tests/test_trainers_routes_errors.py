@@ -36,4 +36,4 @@ def test_update_trainer_not_found(client):
 def test_delete_trainer_not_found(client):
     response = client.delete("/trainers/999")
     assert response.status_code == status.HTTP_404_NOT_FOUND
-    assert response.json()["message"] == "Entrenador no encontrado"
+    assert response.json()["detail"] == "Entrenador no encontrado"
