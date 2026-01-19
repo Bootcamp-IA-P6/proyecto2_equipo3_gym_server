@@ -66,3 +66,15 @@ def client():
     # Nota: El override ya está aplicado globalmente arriba, 
     # así que el cliente lo usará automáticamente.
     return TestClient(app)
+
+@pytest.fixture
+def db():
+    """
+    Fixture para test unitarios que necesitan acceso directo a la DB
+    (Controllers, CRUDs, etc.) sin pasar por la API.
+    """
+    session = TestingSessionLocal()
+    try:
+        yield session
+    finally:
+        session.close()
