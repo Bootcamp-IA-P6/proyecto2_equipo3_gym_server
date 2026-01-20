@@ -4,13 +4,7 @@ from typing import List
 
 
 from database import get_db
-from controllers.classes_controller import (
-    create_class,
-    get_classes_with_filters,
-    get_class_by_id,
-    update_class,
-    delete_class
-)
+from controllers import classes_controller
 
 from schemas.gym_class_schema import GymClassCreate, GymClassUpdate, GymClassResponse
 from core.dependencies import require_role
@@ -24,12 +18,12 @@ router = APIRouter(
 
 @router.post("/", dependencies=[Depends(require_role(["admin"]))], response_model=GymClassResponse)
 def create(gym_class: GymClassCreate, db: Session = Depends(get_db)):
-    return create_class(db, gym_class)
+    return classes_controller.create_class(db, gym_class)
 
 
 # @router.get("/", dependencies=[Depends(require_role(["admin", "trainer", "user"]))], response_model=List[GymClassResponse])
 # def list_classes(db: Session = Depends(get_db)):
-#     return get_classes(db)
+#     return classes_controller.get_classes(db)
 
 # ----- la ruta para la función get con filtros y paginacion -----
 @router.get("/",dependencies=[Depends(require_role(["admin", "trainer", "user"]))], response_model=list[GymClassResponse])
@@ -39,14 +33,14 @@ def get_classes_with_filters(
     name: str = None, 
     db: Session = Depends(get_db)
 ):
-    return get_classes_with_filters(
+    return classes_controller.get_classes_with_filters(
         db, skip=skip, limit=limit, name=name
     )
 #------------------------------------------------------------------
 
 @router.get("/{class_id}", dependencies=[Depends(require_role(["admin", "trainer", "user"]))], response_model=GymClassResponse)
 def get_class(class_id: int, db: Session = Depends(get_db)):
-    gym_class = get_class_by_id(db, class_id)
+    gym_class = classes_controller.get_class_by_id(db, class_id)
     if not gym_class:
         raise HTTPException(status_code=404, detail="Class not found")
         
@@ -55,7 +49,7 @@ def get_class(class_id: int, db: Session = Depends(get_db)):
 
 @router.put("/{class_id}", dependencies=[Depends(require_role(["admin"]))], response_model=GymClassResponse)
 def update(class_id: int, class_data: GymClassUpdate, db: Session = Depends(get_db)):
-    gym_class = update_class(db, class_id, class_data)
+    gym_class = classes_controller.update_class(db, class_id, class_data)
     if not gym_class:
         raise HTTPException(status_code=404, detail="Class not found")
         
@@ -64,7 +58,7 @@ def update(class_id: int, class_data: GymClassUpdate, db: Session = Depends(get_
 
 @router.delete("/{class_id}",  dependencies=[Depends(require_role(["admin"]))],response_model=GymClassResponse)
 def delete(class_id: int, db: Session = Depends(get_db)):
-    gym_class = delete_class(db, class_id)
+    gym_class = classes_controller.delete_class(db, class_id)
     if not gym_class:
         raise HTTPException(status_code=404, detail="Class not found")
        
