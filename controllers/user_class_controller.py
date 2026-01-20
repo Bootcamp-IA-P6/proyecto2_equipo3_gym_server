@@ -124,22 +124,18 @@ def delete_inscription(db: Session, user_id: int):
     """
     logger.info(f"Borrando todas las inscripciones del usuario ID: {user_id}")
     
-    #rows = db.query(UserClass).filter(UserClass.user_id == user_id).delete()
     rows_csv = db.query(UserClass).filter(UserClass.user_id == user_id).all()
+    #El delete devuelve un número entero de filas afectadas
+    rows = db.query(UserClass).filter(UserClass.user_id == user_id).delete()
 
-    if list_objects_to_csv(db, rows_csv, str(user_id)):
-        if rows_csv:
-        #if rows:
-            #db.commit()
-            logger.info(f"Se han eliminado {rows_csv} inscripciones para el usuario {user_id}")
-            #logger.info(f"Se han eliminado {rows} inscripciones para el usuario {user_id}")
-            return {"message": "inscripcion borrada correctamente"}
-        
-        logger.warning(f"Intento de borrar inscripciones: El usuario {user_id} no tenía ninguna")
-        return {"message": "El usuario no está inscrito a ninguna clase"}
+    if rows:
+        db.commit()
+        logger.info(f"Se han eliminado {rows} inscripciones para el usuario {user_id}")
+        #return {"message": "inscripcion borrada correctamente"}
+        return list_objects_to_csv(db, rows_csv, str(user_id))
     
-    logger.warning(f"Intento de crear fichero csv inscripciones: El usuario {user_id} no tenía ninguna")
-    return {"message": "Hubo algún error al crear el DataFramefichero csv"}
+    logger.warning(f"Intento de borrar inscripciones: El usuario {user_id} no tenía ninguna")
+    return {"message": "El usuario no está inscrito a ninguna clase"}
 
 
 def delete_user_class(db: Session, user_id: int, class_id: int):
@@ -166,21 +162,16 @@ def get_all_users_classes_to_csv(db: Session):
     """
     users = db.query(UserClass).all()
 
-    if list_objects_to_csv(db, users, "all"):
-        return {"message": "DataFrame guardado exitosamente en docs/csv/"}
-    else:
-        return {"message": "DataFrame No Guardado, hubo algún problema"}
+    # if list_objects_to_csv(db, users, "all"):
+    #     return {"message": "DataFrame guardado exitosamente en docs/csv/"}
+    # else:
+    #     return {"message": "DataFrame No Guardado, hubo algún problema"}
+
+    return list_objects_to_csv(db, users, "all")
     
 def get_download_file_csv():
-
-    # @app.get("/download-image/{image_name}")
-    # async def download_image(image_name: str):
-    #     file_path = os.path.join("images", image_name) # Ruta al archivo
-    #     return FileResponse(path=file_path, filename=image_name)
-
     file_path = os.path.join("docs\csv", "datos_ejemplo.csv") # Ruta al archivo
     print(f"File Path: {file_path}")
 
-    #return {"message": "DownLoad"}
     return FileResponse(path=file_path, filename="datos_ejemplo.csv")
 

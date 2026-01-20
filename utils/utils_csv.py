@@ -9,6 +9,8 @@ from models.gym_class import GymClass
 
 import pandas as pd
 import datetime
+from fastapi.responses import FileResponse
+import os
 
 def list_objects_to_csv(db: Session, list_user_class: list[UserClass], user_id_file: str):
     # Lista de user_class vacia
@@ -47,19 +49,17 @@ def list_objects_to_csv(db: Session, list_user_class: list[UserClass], user_id_f
 
     df_users = pd.DataFrame(users_class)
 
-    nombre_archivo_csv = 'datos_ejemplo.csv'
+    #nombre_archivo_csv = 'datos_ejemplo.csv'
 
-    #Llamar a file_name_csv
-    print(file_name_csv(user_id_file))
-    #nombre_archivo_csv = file_name_csv("all")
+    #Llamar a la función file_name_csv que crea el nombre del archivo
+    #print(file_name_csv(user_id_file))
+    #file_csv = file_name_csv("all")
+    file_csv = file_name_csv(user_id_file)
 
-    df_users.to_csv('docs/csv/' + nombre_archivo_csv, index=False, encoding='utf-8')
+    df_users.to_csv('docs/csv/' + file_csv, index=False, encoding='utf-8')
     # sep=';'
 
-    if df_users.empty:
-        return False
-    else:
-        return True
+    return file_name_download_csv(file_csv)
 
 def file_name_csv(user_id_file: str):
     file_name = "datcsv_"
@@ -76,3 +76,13 @@ def file_name_csv(user_id_file: str):
         file_name += formatted_date + "_user_" + user_id_file + ".csv"
 
     return file_name
+
+def file_name_download_csv(file_name_download: str):
+    # Poner aquí el codigo de descarga con el nombre del archivo
+    #file_path = os.path.join("docs\csv", "datos_ejemplo.csv") # Ruta al archivo
+    #print(f"File Path: {file_path}")
+
+    file_path = os.path.join("docs\csv", file_name_download) # Ruta al archivo
+
+    #return FileResponse(path=file_path, filename="datos_ejemplo.csv")
+    return FileResponse(path=file_path, filename=file_name_download)
