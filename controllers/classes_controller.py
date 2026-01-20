@@ -27,6 +27,32 @@ def get_classes(db: Session):
     logger.info(f"Se han recuperado {len(classes)} clases activas")
     return classes
 
+# ----- la función get con filtros y paginación -----
+def get_classes_with_filters(
+    db: Session, 
+    skip: int = 0, 
+    limit: int = 10, 
+    name: str = None
+):
+    """
+    Lista las clases del gimnasio con filtros de nombre y paginación.
+    """
+    logger.debug(f"Consultando clases -> skip: {skip}, limit: {limit}, nombre: {name}")
+    
+    # 1. Filtra classes activas (is_active=True)
+    query = db.query(GymClass).filter(GymClass.is_active == True)
+
+    # 2. Filtra por el nombre de la classe (ej: 'yoga' encontrará 'Yoga Principiantes')
+    if name:
+        query = query.filter(GymClass.name.ilike(f"%{name}%"))
+
+    # 3. Aplica el salto (skip) y el tope (limit)
+    classes = query.offset(skip).limit(limit).all()
+    
+    logger.info(f"Se han recuperado {len(classes)} clases activas")
+    return classes
+# ------------------------------------------
+
 def get_class_by_id(db: Session, class_id: int):
     logger.debug(f"Buscando clase con ID: {class_id}")
     gym_class = db.query(GymClass).filter(

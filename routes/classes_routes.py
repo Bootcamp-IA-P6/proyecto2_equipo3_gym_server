@@ -11,9 +11,9 @@ from controllers.classes_controller import (
     update_class,
     delete_class
 )
+from controllers import classes_controller
 from schemas.gym_class_schema import GymClassCreate, GymClassUpdate, GymClassResponse
 from core.dependencies import require_role
-
 
 
 router = APIRouter(
@@ -31,6 +31,18 @@ def create(gym_class: GymClassCreate, db: Session = Depends(get_db)):
 def list_classes(db: Session = Depends(get_db)):
     return get_classes(db)
 
+# ----- la ruta para la función get con filtros y paginacion -----
+@router.get("/",dependencies=[Depends(require_role(["admin", "trainer", "user"]))], response_model=list[GymClassResponse])
+def get_classes_with_filters(
+    skip: int = 0, 
+    limit: int = 10, 
+    name: str = None, 
+    db: Session = Depends(get_db)
+):
+    return classes_controller.get_classes(
+        db, skip=skip, limit=limit, name=name
+    )
+#------------------------------------------------------------------
 
 @router.get("/{class_id}", dependencies=[Depends(require_role(["admin", "trainer", "user"]))], response_model=GymClassResponse)
 def get_class(class_id: int, db: Session = Depends(get_db)):

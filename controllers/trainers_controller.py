@@ -30,6 +30,37 @@ def get_all_trainers(db: Session) -> list[Trainer]:
     logger.info(f"Se han recuperado {len(trainers)} entrenadores")
     return trainers
 
+# ---- la función get con filtros y paginación ----
+def get_trainers_with_filters(
+    db: Session, 
+    skip: int = 0, 
+    limit: int = 10, 
+    specialty: str = None, 
+    is_active: bool = True
+) -> list[Trainer]:
+    """
+    Lista entrenadores con paginación y filtros por especialidad y estado.
+    """
+    logger.debug(f"Consultando entrenadores -> skip: {skip}, limit: {limit}, especialidad: {specialty}")
+    
+    # 1. Iniciamos la consulta base
+    query = db.query(Trainer)
+
+    # 2. Filtro por especialidad (si el usuario lo pide)
+    if specialty:
+        # Buscamos coincidencias parciales (ej: 'yoga' encontrará 'Yoga Integral')
+        query = query.filter(Trainer.specialty.ilike(f"%{specialty}%"))
+    
+    # 3. Filtro por estado activo/inactivo
+    if is_active is not None:
+        query = query.filter(Trainer.is_active == is_active)
+
+    # 4. Aplicamos el 'salto' (skip) y el 'límite' (limit)
+    trainers = query.offset(skip).limit(limit).all()
+    
+    logger.info(f"Se han recuperado {len(trainers)} entrenadores con los filtros aplicados")
+    return trainers
+#------------------------------------------
 
 def get_trainer_by_id(db: Session, trainer_id: int) -> Trainer:
     logger.debug(f"Buscando entrenador con ID: {trainer_id}")

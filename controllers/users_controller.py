@@ -44,6 +44,42 @@ def get_all_users(db: Session):
     logger.info(f"Se han recuperado {len(users)} usuarios activos")
     return users
 
+#---- La función get con filtos y paginacion ----
+def get_users_with_filters(
+    db: Session, 
+    skip: int = 0, 
+    limit: int = 10, 
+    name: str = None, 
+    role: str = None, 
+    is_active: bool = True
+):
+    """
+    Devuelve usuarios con filtros de nombre, rol y estado, además de paginación.
+    """
+    logger.debug(f"Consultando lista de usuarios con filtros -> skip: {skip}, limit: {limit}, name: {name}, role: {role}")
+    
+    # 1. Empezamos preparando la consulta (pero todavía no la enviamos a la base de datos)
+    query = db.query(User)
+
+    # 2. ¿El usuario quiere filtrar por nombre? Añadimos la regla
+    if name:
+        # Usamos ilike para que busque "ana" aunque en la BD ponga "Ana"
+        query = query.filter(User.name.ilike(f"%{name}%"))
+    
+    # 3. ¿El usuario quiere filtrar por rol? Añadimos la regla
+    if role:
+        query = query.filter(User.role == role)
+        
+    # 4. Filtramos por estado (por defecto solo activos, pero se puede cambiar)
+    query = query.filter(User.is_active == is_active)
+
+    # 5. Aplicamos la paginación y ejecutamos la consulta con .all()
+    users = query.offset(skip).limit(limit).all()
+    
+    logger.info(f"Se han recuperado {len(users)} usuarios tras aplicar filtros")
+    return users
+#----------------------------------------
+
 def get_user_by_id(db: Session, user_id: int):
     """
     Devuelve un usuario por su ID.

@@ -20,6 +20,39 @@ def get_all_users_classes(db: Session):
     logger.info(f"Se han recuperado {len(users)} registros de inscripciones")
     return users
 
+# ---- Función get con filtros y paginación .....
+def get_users_classes_with_filters(
+    db: Session, 
+    skip: int = 0, 
+    limit: int = 10, 
+    user_id: int = None, 
+    class_id: int = None, 
+    trainer_id: int = None
+):
+    """
+    Devuelve las inscripciones con filtros por ID de usuario, clase o profesor, y paginación.
+    """
+    logger.debug(f"Consultando inscripciones -> skip: {skip}, limit: {limit}, user: {user_id}, class: {class_id}")
+    
+    # 1. La consulta base
+    query = db.query(UserClass)
+
+    # 2. Filtros
+    if user_id:
+        query = query.filter(UserClass.user_id == user_id)
+    
+    if class_id:
+        query = query.filter(UserClass.class_id == class_id)
+        
+    if trainer_id:
+        query = query.filter(UserClass.trainer_id == trainer_id)
+
+    # 3. Paginación y ejecución
+    enrollments = query.offset(skip).limit(limit).all()
+    
+    logger.info(f"Se han recuperado {len(enrollments)} registros de inscripciones")
+    return enrollments
+# ------------------------------------------------
 
 def create_user_class(db: Session, user_class_data: UserClassCreate):
     """
