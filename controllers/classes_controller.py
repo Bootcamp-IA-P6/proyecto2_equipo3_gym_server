@@ -21,11 +21,11 @@ def create_class(db: Session, class_data: GymClassCreate):
     return gym_class
 
 
-def get_classes(db: Session):
-    logger.debug("Consultando todas las clases activas")
-    classes = db.query(GymClass).filter(GymClass.is_active == True).all()
-    logger.info(f"Se han recuperado {len(classes)} clases activas")
-    return classes
+# def get_classes(db: Session):
+#     logger.debug("Consultando todas las clases activas")
+#     classes = db.query(GymClass).filter(GymClass.is_active == True).all()
+#     logger.info(f"Se han recuperado {len(classes)} clases activas")
+#     return classes
 
 # ----- la función get con filtros y paginación -----
 def get_classes_with_filters(

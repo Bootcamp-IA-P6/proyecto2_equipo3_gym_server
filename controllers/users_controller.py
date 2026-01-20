@@ -35,14 +35,14 @@ def create_user(db: Session, user_data: UserCreate):
     return new_user
 
 
-def get_all_users(db: Session):
-    """
-    Devuelve todos los usuarios activos.
-    """
-    logger.debug("Consultando lista de usuarios activos")
-    users = db.query(User).filter(User.is_active == True).all()
-    logger.info(f"Se han recuperado {len(users)} usuarios activos")
-    return users
+# def get_all_users(db: Session):
+#     """
+#     Devuelve todos los usuarios activos.
+#     """
+#     logger.debug("Consultando lista de usuarios activos")
+#     users = db.query(User).filter(User.is_active == True).all()
+#     logger.info(f"Se han recuperado {len(users)} usuarios activos")
+#     return users
 
 #---- La función get con filtos y paginacion ----
 def get_users_with_filters(

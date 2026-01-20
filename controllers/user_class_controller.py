@@ -10,15 +10,15 @@ from config.logger import get_logger
 
 logger = get_logger(__name__)
 
-def get_all_users_classes(db: Session):
-    """
-    Devuelve todos los usuarios, clases y profesores.
-    """
-    logger.debug("Consultando todas las inscripciones del sistema")
-    users = db.query(UserClass).all()
+# def get_all_users_classes(db: Session):
+#     """
+#     Devuelve todos los usuarios, clases y profesores.
+#     """
+#     logger.debug("Consultando todas las inscripciones del sistema")
+#     users = db.query(UserClass).all()
     
-    logger.info(f"Se han recuperado {len(users)} registros de inscripciones")
-    return users
+#     logger.info(f"Se han recuperado {len(users)} registros de inscripciones")
+#     return users
 
 # ---- Función get con filtros y paginación .....
 def get_users_classes_with_filters(

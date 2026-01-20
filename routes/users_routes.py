@@ -20,11 +20,11 @@ def create_user(
 ):
      return users_controller.create_user(db, user)
  
-@router.get("/", dependencies=[Depends(require_role(["admin"]))], response_model=list[UserResponse])
-def get_users(
-    db: Session = Depends(get_db)
-):
-    return users_controller.get_all_users(db)
+# @router.get("/", dependencies=[Depends(require_role(["admin"]))], response_model=list[UserResponse])
+# def get_users(
+#     db: Session = Depends(get_db)
+# ):
+#     return users_controller.get_all_users(db)
 
 #---- La ruta para la función get con filtos y paginacion ----
 @router.get("/", dependencies=[Depends(require_role(["admin"]))], response_model=list[UserResponse])
@@ -37,7 +37,7 @@ def get_users_with_filters(
     db: Session = Depends(get_db)
 ):
     # Llamamos al controlador pasándole todos los nuevos parámetros
-    return users_controller.get_all_users(
+    return users_controller.get_users_with_filters(
         db, skip=skip, limit=limit, name=name, role=role, is_active=is_active
     )
 #--------------------------------------------------

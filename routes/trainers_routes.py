@@ -18,11 +18,11 @@ def create_trainer(
 ):
     return trainers_controller.create_trainer(db, payload)
 
-@router.get( "/", dependencies=[Depends(require_role(["admin", "trainer", "user"]))],response_model=list[TrainerResponse])
-def get_trainers(
-    db: Session = Depends(get_db)
-):
-    return trainers_controller.get_all_trainers(db)
+# @router.get( "/", dependencies=[Depends(require_role(["admin", "trainer", "user"]))],response_model=list[TrainerResponse])
+# def get_trainers(
+#     db: Session = Depends(get_db)
+# ):
+#     return trainers_controller.get_all_trainers(db)
 
 # ---- la ruta para la función get con filtros y paginación ----
 @router.get("/",dependencies=[Depends(require_role(["admin", "trainer", "user"]))], response_model=list[TrainerResponse])
@@ -33,7 +33,7 @@ def get_trainers_with_filters(
     is_active: bool = True,
     db: Session = Depends(get_db)
 ):
-    return trainers_controller.get_all_trainers(
+    return trainers_controller.get_trainers_with_filters(
         db, skip=skip, limit=limit, specialty=specialty, is_active=is_active
     )
 # ------------------------------------------

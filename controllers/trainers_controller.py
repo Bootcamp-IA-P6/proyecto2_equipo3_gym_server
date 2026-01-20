@@ -24,11 +24,11 @@ def create_trainer(db: Session, payload: TrainerCreate) -> Trainer:
     return trainer
 
 
-def get_all_trainers(db: Session) -> list[Trainer]:
-    logger.debug("Consultando la lista completa de entrenadores")
-    trainers = db.query(Trainer).all()
-    logger.info(f"Se han recuperado {len(trainers)} entrenadores")
-    return trainers
+# def get_all_trainers(db: Session) -> list[Trainer]:
+#     logger.debug("Consultando la lista completa de entrenadores")
+#     trainers = db.query(Trainer).all()
+#     logger.info(f"Se han recuperado {len(trainers)} entrenadores")
+#     return trainers
 
 # ---- la función get con filtros y paginación ----
 def get_trainers_with_filters(
