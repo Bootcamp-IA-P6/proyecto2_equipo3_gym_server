@@ -24,7 +24,17 @@ setup_logger()
 logger = get_logger("app")
 
 app = FastAPI(
-    title="Gym Management API"
+    title="Gym Management API 🏋️‍♂️",
+    description= """API para la gestión integral de un gimnasio.
+    Permite administrar **Usuarios**, **Entrenadores** e **Clases**.
+
+    Producido por el Equipo 3: Gema, Iris, Juan, Naizabeth.
+    """,
+    version="1.0.0",
+    contact={
+        "name": "Nexafit Labs - Consultoría tecnológica para el sector fitness",
+        "url": "http://nexafit-labs.tech/support",
+    }
 )
 
 # CONFIGURAR CORS CON ENV ---
