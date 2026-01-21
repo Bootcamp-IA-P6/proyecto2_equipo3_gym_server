@@ -72,13 +72,9 @@ def delete_user_class(
 ):
     return user_class_controller.delete_user_class(db, user_id, class_id)
 
-#@router.get("/user_classes_csv", response_model=list[UserClassResponse])
+
 @router.get("/user_classes_csv")
 def get_user_class_csv(
     db: Session = Depends(get_db)
 ):
     return user_class_controller.get_all_users_classes_to_csv(db)
-
-@router.get("/user_classes_download_csv")
-def get_user_class_download_csv():
-    return user_class_controller.get_download_file_csv()

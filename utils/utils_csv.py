@@ -47,17 +47,12 @@ def list_objects_to_csv(db: Session, list_user_class: list[UserClass], user_id_f
 
         users_class.append(user_aux)
 
+    # Crea el DataFrame 
     df_users = pd.DataFrame(users_class)
-
-    #nombre_archivo_csv = 'datos_ejemplo.csv'
-
-    #Llamar a la función file_name_csv que crea el nombre del archivo
-    #print(file_name_csv(user_id_file))
-    #file_csv = file_name_csv("all")
+    # Crea el nombre del fichero
     file_csv = file_name_csv(user_id_file)
-
+    # Guarda el fichero csv en la carpeta docs/csv del Backend
     df_users.to_csv('docs/csv/' + file_csv, index=False, encoding='utf-8')
-    # sep=';'
 
     return file_name_download_csv(file_csv)
 
@@ -78,11 +73,6 @@ def file_name_csv(user_id_file: str):
     return file_name
 
 def file_name_download_csv(file_name_download: str):
-    # Poner aquí el codigo de descarga con el nombre del archivo
-    #file_path = os.path.join("docs\csv", "datos_ejemplo.csv") # Ruta al archivo
-    #print(f"File Path: {file_path}")
-
     file_path = os.path.join("docs\csv", file_name_download) # Ruta al archivo
 
-    #return FileResponse(path=file_path, filename="datos_ejemplo.csv")
     return FileResponse(path=file_path, filename=file_name_download)
