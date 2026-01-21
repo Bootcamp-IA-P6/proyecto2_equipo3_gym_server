@@ -11,12 +11,26 @@ router = APIRouter (
     tags= {"User_Class"} #para Swagger (orden y nombre bonito)
 )
 
-@router.get("/", dependencies=[Depends(require_role(["admin"]))],response_model=list[UserClassResponse])
-def get_user_class(
+# @router.get("/", dependencies=[Depends(require_role(["admin"]))],response_model=list[UserClassResponse])
+# def get_user_class(
+#     db: Session = Depends(get_db)
+# ):
+#     return user_class_controller.get_all_users_classes(db)
+
+# ---- La ruta para la función get con filtros y paginacion ----
+@router.get("/", dependencies=[Depends(require_role(["admin"]))], response_model=list[UserClassResponse])
+def get_users_classes_with_filters(
+    skip: int = 0, 
+    limit: int = 10, 
+    user_id: int = None, 
+    class_id: int = None, 
+    trainer_id: int = None,
     db: Session = Depends(get_db)
 ):
-    return user_class_controller.get_all_users_classes(db)
-
+    return user_class_controller.get_users_classes_with_filters(
+        db, skip=skip, limit=limit, user_id=user_id, class_id=class_id, trainer_id=trainer_id
+    )
+#------------------------------------------------------------------
 
 @router.get("/user_classes/{user_id}",dependencies=[Depends(require_role(["admin"]))], response_model=list[UserClassResponse])
 def get_userId_classes(
