@@ -8,6 +8,12 @@ from models.trainer import Trainer
 from models.gym_class import GymClass
 from config.logger import get_logger
 
+from utils.utils_csv import file_name_csv, list_objects_to_csv
+
+import pandas as pd
+from fastapi.responses import FileResponse
+import os
+
 logger = get_logger(__name__)
 
 # def get_all_users_classes(db: Session):
@@ -151,12 +157,14 @@ def delete_inscription(db: Session, user_id: int):
     """
     logger.info(f"Borrando todas las inscripciones del usuario ID: {user_id}")
     
+    rows_csv = db.query(UserClass).filter(UserClass.user_id == user_id).all()
+    #El delete devuelve un número entero de filas afectadas
     rows = db.query(UserClass).filter(UserClass.user_id == user_id).delete()
 
     if rows:
         db.commit()
         logger.info(f"Se han eliminado {rows} inscripciones para el usuario {user_id}")
-        return {"message": "inscripcion borrada correctamente"}
+        return list_objects_to_csv(db, rows_csv, str(user_id))
     
     logger.warning(f"Intento de borrar inscripciones: El usuario {user_id} no tenía ninguna")
     return {"message": "El usuario no está inscrito a ninguna clase"}
@@ -176,6 +184,17 @@ def delete_user_class(db: Session, user_id: int, class_id: int):
         db.commit()
         logger.info(f"Usuario {user_id} eliminado de la clase {class_id}")
         return {"message": "Usuario borrado de esta clase correctamente"}
-
+    
     logger.warning(f"Fallo al borrar: El usuario {user_id} no estaba en la clase {class_id}")
     return {"message": "El usuario no está inscrito a esta clase"}
+
+
+def get_all_users_classes_to_csv(db: Session):
+    """
+    Devuelve todos los usuarios, clases y profesores y los exporta a un archivo csv.
+    """
+    users = db.query(UserClass).all()
+
+    return list_objects_to_csv(db, users, "all")
+    
+
