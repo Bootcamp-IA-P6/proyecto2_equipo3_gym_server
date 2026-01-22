@@ -1,0 +1,75 @@
+name: CI/CD Gym Server
+
+on:
+  push:
+    branches: [ "main", "develop" , "feature_dockerizacion"]
+  pull_request:
+    branches: [ "main", "develop" ]
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  # --- JOB 1: TEST ---
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout del código
+        uses: actions/checkout@v4
+
+      - name: Configurar Python 3.13
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Instalar dependencias
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Ejecutar Tests
+        # Definimos variables de entorno "dummy" para que Pydantic no falle al validar settings.py.
+        # Como los tests usan SQLite (conftest.py), no necesitamos la URL real de Postgres aquí.
+        env:
+          DATABASE_URL: "postgresql://user:pass@localhost:5432/db"
+          JWT_SECRET_KEY: "secret_test_key"
+          JWT_ALGORITHM: "HS256"
+        run: |
+          pytest
+
+  # --- JOB 2: BUILD & PUSH DOCKER ---
+  build-and-push:
+    needs: test # IMPORTANTE: Solo corre si los tests pasan
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write # Necesario para subir a GHCR
+
+    steps:
+      - name: Checkout del código
+        uses: actions/checkout@v4
+
+      - name: Loguearse en GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extraer metadatos (tags, labels)
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=ref,event=branch
+            type=sha,format=long
+
+      - name: Construir y subir imagen (Push)
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}

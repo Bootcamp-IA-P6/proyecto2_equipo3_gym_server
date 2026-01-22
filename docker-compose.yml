@@ -1,0 +1,26 @@
+services:
+  gym-server:
+    # 1. Nombre de la imagen asi la llame en mi build cuando la hice
+    image: gym-server
+    
+    # 2. Nombre del contenedor 
+    container_name: gym_server_container
+    
+    # 3. Mapeo de puertos (Tu PC : Contenedor)
+    ports:
+      - "8000:8000"
+      
+    # 4. Variables de Entorno
+    # Lee mi archivo env donde esta la Url de Supabase  y las demas claves de tokens
+    # Esto conecta mi app con Supabase usando las credenciales que ya tengo.
+    env_file:
+      - .env
+
+    # 5. Volúmenes, este es importante asi siempre en mi iamgen antigua si hay nuevo codigo "monta" mi carpeta de Windows encima de la carpeta /app del contenedor con el nuevo codigo
+    # Conecta tu carpeta actual (.) con la carpeta de trabajo del contenedor (/app)
+    volumes:
+      - .:/app
+    
+    # 6. Comando de arranque (Sobrescribimos el del Dockerfile)
+    # Añadimos "--reload" para que si cambiaMOS código, el servidor se reinicie solo.
+    command: uvicorn app:app --host 0.0.0.0 --port 8000 --reload
