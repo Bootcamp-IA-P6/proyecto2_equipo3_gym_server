@@ -1,13 +1,8 @@
-# proyecto2_equipo3_gym_server
-# proyecto2_equipo3_gym_server
-🏋️‍♂️ GYMPRO - Sistema de Gestión de Gimnasio
-Este es un sistema de backend robusto diseñado para gestionar las operaciones diarias de un gimnasio. Permite a los administradores controlar usuarios (entrenadores, alumnos, administradores) y gestionar el calendario de clases.
 
 
-¡Claro que sí! Un buen README es la carta de presentación de cualquier proyecto profesional. Basándome en la imagen de tu repositorio y la descripción de tu sistema GYMPRO, aquí tienes una propuesta completa y bien estructurada.
 
 🏋️‍♂️ GYMPRO - Sistema de Gestión de Gimnasio
-Este es un sistema de backend robusto diseñado para gestionar las operaciones diarias de un gimnasio. Permite a los administradores controlar usuarios (entrenadores, alumnos, administradores) y gestionar el calendario de clases.
+Este es un sistema de backend robusto diseñado para gestionar las operaciones diarias de un gimnasio. Permite al  administrador dar de alta en el sistema a usuarios, entrenadores, alumnos y administradores y gestionar para poder visualizar quienes estan de alta o baja 
 
 🚀 Tecnologías Utilizadas
 Framework: FastAPI (Python)
@@ -21,22 +16,22 @@ Contenerización: Docker & Docker Compose
 📂 Estructura del Proyecto (Jerarquía)
 Plaintext
 GYMPRO-BACKEND/
-├── .github/                # Automatización y CI/CD
-│   └── workflows/          # Archivos YAML para pruebas y despliegues automáticos
-├── config/                 # Ajustes globales (Variables de entorno, CORS)
-├── controllers/            # Lógica de negocio (El cerebro que une rutas y modelos)
-├── core/                   # Seguridad (Validación de JWT, Roles y permisos)
-├── database/               # Conexión a Supabase y configuración de SQLAlchemy
-├── docs/                   # Especificaciones técnicas y documentación extra
-├── models/                 # Modelos de base de datos (Clases de SQLAlchemy)
-├── routes/                 # Endpoints de la API (usuarios, clases, membresías)
-├── schemas/                # Validación de datos de entrada/salida (Pydantic)
-├── tests/                  # Pruebas unitarias y de integración (Auth, CRUD)
-├── utils/                  # Funciones de apoyo (Exportación CSV, Helpers)
-├── app.py                  # Punto de entrada principal de FastAPI
-├── docker-compose.yml      # Orquestación de contenedores
-├── Dockerfile              # Configuración de la imagen del backend
-└── requirements.txt        # Dependencias de Python
+├── .github/                 Automatización y CI/CD
+│   └── workflows/           Archivos YAML para pruebas y despliegues automáticos
+├── config/                  Ajustes globales (Variables de entorno, CORS)
+├── controllers/             Lógica de negocio (El cerebro que une rutas y modelos)
+├── core/                    Seguridad (Validación de JWT, Roles y permisos)
+├── database/                Conexión a Supabase y configuración de SQLAlchemy
+├── docs/                    Especificaciones técnicas y documentación extra
+├── models/                  Modelos de base de datos (Clases de SQLAlchemy)
+├── routes/                  Endpoints de la API (usuarios, clases, entrenadores)
+├── schemas/                 Validación de datos de entrada/salida (Pydantic)
+├── tests/                   Pruebas unitarias y de integración (Auth, CRUD)
+├── utils/                   Funciones de apoyo (Exportación CSV, Helpers)
+├── app.py                   Punto de entrada principal de FastAPI
+├── docker-compose.yml       Orquestación de contenedores
+├── Dockerfile               Configuración de la imagen del backend
+└── requirements.txt         Dependencias de Python
 
 🛠️ Funcionalidades Principales (CRUD)
 El sistema permite al Administrador realizar las siguientes acciones:
