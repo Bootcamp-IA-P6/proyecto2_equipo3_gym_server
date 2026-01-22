@@ -1,4 +1,4 @@
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, joinedload
 from models.trainer import Trainer
 from models.user_class import UserClass
 from models.gym_class import GymClass
@@ -44,7 +44,7 @@ def get_trainers_with_filters(
     logger.debug(f"Consultando entrenadores -> skip: {skip}, limit: {limit}, especialidad: {specialty}")
     
     # 1. Iniciamos la consulta base
-    query = db.query(Trainer)
+    query = db.query(Trainer).options(joinedload(Trainer.user))
 
     # 2. Filtro por especialidad (si el usuario lo pide)
     if specialty:
