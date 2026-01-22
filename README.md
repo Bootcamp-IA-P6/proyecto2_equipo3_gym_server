@@ -79,17 +79,23 @@ Ejecuta la aplicación:
 Bash
 uvicorn app:app --reload
 
-📂 Que hace esto en el backend ?
-
-Entrada: El usuario hace una petición a una URL definida en routes/.
-
-Validación: schemas/ revisa que los datos enviados (como el nombre de un alumno) sean correctos.
-
-Seguridad: core/ verifica si el usuario tiene el "Token" de administrador.
-
-Procesamiento: controllers/ decide qué hacer (ej. "Registrar clase").
-
-Persistencia: models/ y database/ guardan la información finalmente en Supabase.
+GYMPRO-BACKEND/
+├── .github/                # Automatización y CI/CD
+│   └── workflows/          # Archivos YAML para pruebas y despliegues automáticos
+├── config/                 # Ajustes globales (Variables de entorno, CORS)
+├── controllers/            # Lógica de negocio (El cerebro que une rutas y modelos)
+├── core/                   # Seguridad (Validación de JWT, Roles y permisos)
+├── database/               # Conexión a Supabase y configuración de SQLAlchemy
+├── docs/                   # Especificaciones técnicas y documentación extra
+├── models/                 # Modelos de base de datos (Clases de SQLAlchemy)
+├── routes/                 # Endpoints de la API (usuarios, clases, membresías)
+├── schemas/                # Validación de datos de entrada/salida (Pydantic)
+├── tests/                  # Pruebas unitarias y de integración (Auth, CRUD)
+├── utils/                  # Funciones de apoyo (Exportación CSV, Helpers)
+├── app.py                  # Punto de entrada principal de FastAPI
+├── docker-compose.yml      # Orquestación de contenedores
+├── Dockerfile              # Configuración de la imagen del backend
+└── requirements.txt        # Dependencias de Python
 
 🌟 Resumen del Proyecto: GYMPRO BackendGYMPRO no es solo un CRUD; es un ecosistema de gestión diseñado para la escalabilidad y la eficiencia operativa. 
 
