@@ -104,7 +104,7 @@ de manera centralizada, protegiendo la información sensible del gimnasio.
 ### 📦 Instalación Local
 
 **1️⃣ Clonar el repositorio**
-```bash
+bash
 git clone [https://github.com/Bootcamp-IA-P6/proyecto2_equipo3_gym_server.git]
 
 
@@ -162,9 +162,7 @@ GYMPRO-BACKEND/
 ├── Dockerfile           # Configuración de imagen Docker
 ├── docker-compose.yml   # Orquestación de contenedores
 └── requirements.txt     # Dependencias del proyecto
-
 ```
-
 📝 Scripts Disponibles
 npm run dev (o el comando equivalente en Python):
 
@@ -174,8 +172,8 @@ pytest: Ejecuta la suite de pruebas.
 
 docker-compose up: Levanta la infraestructura completa.
 
-👩‍💻 Equipo de Desarrollo
-Juan  - Naiza - Gema - Iris
+###👩‍💻 Equipo de Desarrollo
+Juan Manuel - Iris - Gema -Naiza
 
 ## 🔌 Endpoints Principales
 
@@ -194,7 +192,7 @@ Juan  - Naiza - Gema - Iris
 **Ejemplo: Crear Usuario (Alumno/Entrenador)**
 `POST /users`
 
-```json
+``json
 {
   "username": "jdoe_gym",
   "email": "jdoe@example.com",
@@ -202,25 +200,40 @@ Juan  - Naiza - Gema - Iris
   "role": "alumno",
   "status": "activo",
   "password": "SecurePassword123"
-}
-🏋️‍♂️ Gestión de ClasesMétodoEndpointDescripciónAuthGET/classesListar todas las clases programadas
+}``
 
-    ❌POST/classesCrear una nueva sesión de entrenamiento✅ AdminPUT/classes/:idActualizar horario o entrenador de una clase✅ AdminDELETE/classes/:idCancelar/Eliminar una clase✅ AdminEjemplo: Crear ClasePOST /classesJSON{
-  "name": "Crossfit Avanzado",
+## Clases Método Endpoin  Descripción AuthGET/classesListar
+todas las clases programadas
+
+
+✅ AdminPUT/classes/:id Actualizar horario o entrenador de una clase
+✅ AdminDELETE/classes/:id Cancelar/Eliminar una clase
+✅ AdminEjemplo: Crear ClasePOST /classesJSON{
+
+``  "name": "Crossfit Avanzado",
   "schedule": "2024-05-20T10:00:00",
   "trainer_id": 5,
   "capacity": 20,
   "room": "Sala A"
-}
+}``
+## 🛡️ Seguridad y Buenas PrácticasEn GYMPRO 
 
-🛡️ Seguridad y Buenas PrácticasEn GYMPRO 
-
-  La seguridad es nuestra prioridad. Hemos implementado:
+``  La seguridad es nuestra prioridad. Hemos implementado:
  ✅ Validación de Datos: Cada entrada es filtrada por modelos de Pydantic para evitar datos corruptos.
  ✅ Haseo de Contraseñas: Las claves nunca se guardan en texto plano, usamos algoritmos de encriptación fuerte.
  ✅ Protección de Rutas: Middleware especializado que verifica el rol del usuario antes de permitir acciones CRUD.
- ✅ CORS: Configurado para permitir peticiones únicamente desde el dominio de tu Frontend oficial.
+ ✅ CORS: Configurado para permitir peticiones únicamente desde el dominio de tu Frontend oficial``
 
  
+
+
+
+
+
+
+
+
+
+
 
  
