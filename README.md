@@ -51,7 +51,7 @@ de manera centralizada, protegiendo la información sensible del gimnasio.
 
 
 
- <img src="(docs/img/diagrama.png)" alt="Diagrama de Base de Datos GYMPRO" width="850">
+ <img src="https://github.com/Bootcamp-IA-P6/proyecto2_equipo3_gym_server/blob/main/docs/img/diagrama.png?raw=true" alt="Diagrama de Base de Datos GYMPRO" width="850">
 
 ### ✨ Características Principales
 
