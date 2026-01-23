@@ -8,6 +8,54 @@ Proporcionar una herramienta administrativa eficiente que permita gestionar el c
 
 ---
 
+<div align="center">
+
+---
+
+## 📊 Análisis del Modelo de Datos
+
+
+
+**¿Qué representa este diagrama?** Este esquema define la arquitectura relacional de la base de datos de **GYMPRO**.  
+Se basa en una estructura de cuatro entidades clave interconectadas que permiten el flujo  
+de información entre el personal administrativo, los instructores y los alumnos.
+
+### 📋 Resumen de Entidades
+
+**`users`** Es la tabla maestra. Almacena la identidad de cada persona (nombre, email, hash de contraseña)  
+y define su permiso mediante un campo `role` (Admin/User).
+
+**`trainers`** Una extensión de la tabla de usuarios. Aquí se guarda la información específica de los  
+profesionales, como su `specialty`, vinculándolos directamente a su perfil de usuario.
+
+**`classes`** El catálogo de actividades disponibles. Define el nombre y la descripción de  
+cada entrenamiento ofrecido por el gimnasio.
+
+**`user_class`** La tabla de unión (Many-to-Many). Es el motor del sistema, ya que conecta a un  
+**usuario** (alumno) con una **clase** específica y le asigna un **entrenador** responsable.
+
+---
+
+### 💡 Beneficios Técnicos
+
+**1. Integridad Referencial** La base de datos evita la duplicidad de información. Si un entrenador cambia su especialidad,  
+se actualiza en un solo lugar y se refleja en todo el sistema automáticamente.
+
+**2. Escalabilidad de Roles** El diseño permite separar la lógica de un usuario común de la de un entrenador,  
+facilitando la adición de nuevos perfiles profesionales en el futuro.
+
+**3. Trazabilidad Total** Permite saber exactamente qué alumnos están inscritos en cada clase y quién es el  
+instructor a cargo, facilitando reportes de asistencia y desempeño.
+
+**4. Seguridad de Datos** La separación de credenciales permite implementar políticas de seguridad (JWT)  
+de manera centralizada, protegiendo la información sensible del gimnasio.
+
+---
+
+</div>
+
+ <img src=(https://github.com/Bootcamp-IA-P6/proyecto2_equipo3_gym_server/blob/feature/Redme-GymPro-server/docs/img/diagrama.png)" alt="Diagrama de Base de Datos GYMPRO" width="850">
+
 ### ✨ Características Principales
 
 **👥 Gestión de Usuarios y Roles**
