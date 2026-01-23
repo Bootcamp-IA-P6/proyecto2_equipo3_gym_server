@@ -105,16 +105,16 @@ de manera centralizada, protegiendo la información sensible del gimnasio.
 
 **1️⃣ Clonar el repositorio**
 bash
-git clone [https://github.com/Bootcamp-IA-P6/proyecto2_equipo3_gym_server.git]
+git clone [Server GymPro ](https://github.com/Bootcamp-IA-P6/proyecto2_equipo3_gym_server.git)
 
 
-Configurar variables de entorno Crea un archivo .env en la raíz del proyecto con tus credenciales de Supabase:
+## Configurar variables de entorno Crea un archivo .env en la raíz del proyecto con tus credenciales de Supabase:
 
-Fragmento de código
+## Fragmento de código
 
-SUPABASE_URL=tu_url_de_supabase
-SUPABASE_KEY=tu_anon_key
-DATABASE_URL=postgresql://postgres:password@db.supabase.co:5432/postgres
+* SUPABASE_URL=tu_url_de_supabase
+* SUPABASE_KEY=tu_anon_key
+* DATABASE_URL=postgresql://postgres:password@db.supabase.co:5432/postgres
 
 3️⃣ Instalar dependencias
 Bash
@@ -126,25 +126,25 @@ Bash
 uvicorn app:app --reload
 💡 La documentación automática estará disponible en: http://localhost:8000/docs
 
-🐳 Dockerización
+## 🐳 Dockerización
 El proyecto está completamente preparado para entornos de contenedores, lo que garantiza que funcione de manera idéntica en cualquier máquina.
 
 Dockerfile: Configura la imagen base de Python, instala dependencias y optimiza el entorno de ejecución.
 
 Docker Compose: Orquesta el backend, mapea los puertos (8000:8000) y carga automáticamente las variables de entorno.
 
-Comandos rápidos:
+## Comandos rápidos:
 
 Bash
-# Construir la imagen
+### Construir la imagen
 docker-compose build
 
-# Levantar el sistema
+### Levantar el sistema
 docker-compose up -d
 
 
-📁 Estructura del Proyecto
-Plaintext
+📁 Estructura del Proyecto/ Server GymPro 
+
 ```
 GYMPRO-BACKEND/
 ├── src/
@@ -163,7 +163,7 @@ GYMPRO-BACKEND/
 ├── docker-compose.yml   # Orquestación de contenedores
 └── requirements.txt     # Dependencias del proyecto
 ```
-📝 Scripts Disponibles
+## 📝 Scripts Disponibles
 npm run dev (o el comando equivalente en Python):
 
 uvicorn app:app --reload: Inicia el servidor de desarrollo.
@@ -218,13 +218,28 @@ todas las clases programadas
 }``
 ## 🛡️ Seguridad y Buenas PrácticasEn GYMPRO 
 
-``  La seguridad es nuestra prioridad. Hemos implementado:
- ✅ Validación de Datos: Cada entrada es filtrada por modelos de Pydantic para evitar datos corruptos.
- ✅ Haseo de Contraseñas: Las claves nunca se guardan en texto plano, usamos algoritmos de encriptación fuerte.
- ✅ Protección de Rutas: Middleware especializado que verifica el rol del usuario antes de permitir acciones CRUD.
- ✅ CORS: Configurado para permitir peticiones únicamente desde el dominio de tu Frontend oficial``
+ ## La seguridad es nuestra prioridad. Hemos implementado:
 
- 
+ * ✅ Validación de Datos: Cada entrada es filtrada por modelos de Pydantic para evitar datos corruptos.
+ * ✅ Haseo de Contraseñas:   Las claves nunca se guardan en texto plano, usamos algoritmos de encriptación fuerte.
+ * ✅ Protección de Rutas: Middleware especializado que verifica el rol del usuario antes de permitir acciones CRUD.
+ * ✅ CORS: Configurado para permitir peticiones únicamente desde el dominio de tu Frontend oficial``
+
+ ## Equipo de desarrollo 
+
+* Gema 
+* Juan Manuel 
+* Iris 
+* Naiza 
+
+## 📄🎯 Propósito Del Proyecto
+ Entender cómo funciona un CRUD (Create, Read, Update, Delete), que representa las cuatro funciones básicas de la gestión de datos en cualquier aplicación profesional. 
+
+
+
+
+
+
 
 
 
