@@ -23,9 +23,12 @@ Proporcionar una herramienta administrativa eficiente que permita gestionar el c
 
 
 
+
 **¿Qué representa este diagrama?** Este esquema define la arquitectura relacional de la base de datos de **GYMPRO**.  
 Se basa en una estructura de cuatro entidades clave interconectadas que permiten el flujo  
 de información entre el personal administrativo, los instructores y los alumnos.
+
+ <img src="https://github.com/Bootcamp-IA-P6/proyecto2_equipo3_gym_server/blob/main/docs/img/diagrama.png?raw=true" alt="Diagrama de Base de Datos GYMPRO" width="850">
 
 ### 📋 Resumen de Entidades
 
@@ -61,7 +64,7 @@ de manera centralizada, protegiendo la información sensible del gimnasio.
 
 
 
- <img src="https://github.com/Bootcamp-IA-P6/proyecto2_equipo3_gym_server/blob/main/docs/img/diagrama.png?raw=true" alt="Diagrama de Base de Datos GYMPRO" width="850">
+
 
 ### ✨ Características Principales
 
