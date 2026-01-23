@@ -104,7 +104,7 @@ de manera centralizada, protegiendo la información sensible del gimnasio.
 ### 📦 Instalación Local
 
 **1️⃣ Clonar el repositorio**
-```bash
+bash
 git clone [https://github.com/Bootcamp-IA-P6/proyecto2_equipo3_gym_server.git]
 
 
@@ -190,7 +190,7 @@ Tu Nombre - GitHub - LinkedIn
 **Ejemplo: Crear Usuario (Alumno/Entrenador)**
 `POST /users`
 
-```json
+json
 {
   "username": "jdoe_gym",
   "email": "jdoe@example.com",
