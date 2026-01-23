@@ -218,11 +218,11 @@ todas las clases programadas
 }``
 ## 🛡️ Seguridad y Buenas PrácticasEn GYMPRO 
 
-  La seguridad es nuestra prioridad. Hemos implementado:
+``  La seguridad es nuestra prioridad. Hemos implementado:
  ✅ Validación de Datos: Cada entrada es filtrada por modelos de Pydantic para evitar datos corruptos.
  ✅ Haseo de Contraseñas: Las claves nunca se guardan en texto plano, usamos algoritmos de encriptación fuerte.
  ✅ Protección de Rutas: Middleware especializado que verifica el rol del usuario antes de permitir acciones CRUD.
- ✅ CORS: Configurado para permitir peticiones únicamente desde el dominio de tu Frontend oficial.
+ ✅ CORS: Configurado para permitir peticiones únicamente desde el dominio de tu Frontend oficial``
 
  
 
