@@ -108,7 +108,7 @@ de manera centralizada, protegiendo la información sensible del gimnasio.
 git clone [https://github.com/Bootcamp-IA-P6/proyecto2_equipo3_gym_server.git]
 
 
-2️⃣ Configurar variables de entorno Crea un archivo .env en la raíz del proyecto con tus credenciales de Supabase:
+Configurar variables de entorno Crea un archivo .env en la raíz del proyecto con tus credenciales de Supabase:
 
 Fragmento de código
 
@@ -171,7 +171,7 @@ pytest: Ejecuta la suite de pruebas.
 docker-compose up: Levanta la infraestructura completa.
 
 👩‍💻 Equipo de Desarrollo
-Tu Nombre - GitHub - LinkedIn
+Juan  - Naiza - Gema - Iris
 
 ## 🔌 Endpoints Principales
 
@@ -199,17 +199,24 @@ Tu Nombre - GitHub - LinkedIn
   "status": "activo",
   "password": "SecurePassword123"
 }
-🏋️‍♂️ Gestión de ClasesMétodoEndpointDescripciónAuthGET/classesListar todas las clases programadas❌POST/classesCrear una nueva sesión de entrenamiento✅ AdminPUT/classes/:idActualizar horario o entrenador de una clase✅ AdminDELETE/classes/:idCancelar/Eliminar una clase✅ AdminEjemplo: Crear ClasePOST /classesJSON{
+🏋️‍♂️ Gestión de ClasesMétodoEndpointDescripciónAuthGET/classesListar todas las clases programadas
+
+    ❌POST/classesCrear una nueva sesión de entrenamiento✅ AdminPUT/classes/:idActualizar horario o entrenador de una clase✅ AdminDELETE/classes/:idCancelar/Eliminar una clase✅ AdminEjemplo: Crear ClasePOST /classesJSON{
   "name": "Crossfit Avanzado",
   "schedule": "2024-05-20T10:00:00",
   "trainer_id": 5,
   "capacity": 20,
   "room": "Sala A"
 }
-##🛡️ Seguridad y Buenas PrácticasEn GYMPRO 
+
+🛡️ Seguridad y Buenas PrácticasEn GYMPRO 
 
   La seguridad es nuestra prioridad. Hemos implementado:
  ✅ Validación de Datos: Cada entrada es filtrada por modelos de Pydantic para evitar datos corruptos.
  ✅ Haseo de Contraseñas: Las claves nunca se guardan en texto plano, usamos algoritmos de encriptación fuerte.
  ✅ Protección de Rutas: Middleware especializado que verifica el rol del usuario antes de permitir acciones CRUD.
  ✅ CORS: Configurado para permitir peticiones únicamente desde el dominio de tu Frontend oficial.
+
+ 
+
+ 
