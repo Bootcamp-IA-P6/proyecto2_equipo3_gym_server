@@ -24,6 +24,9 @@ Proporcionar una herramienta administrativa eficiente que permita gestionar el c
 * ✅ **Validación Estricta:** Uso de Pydantic para asegurar que los datos de entrada cumplan con los requisitos del negocio.
 * ✅ **Seguridad JWT:** Infraestructura preparada para la validación de tokens y protección de rutas.
 
+
+
+
 ---
 
 ### 🚀 Tecnologías
@@ -44,18 +47,21 @@ Proporcionar una herramienta administrativa eficiente que permita gestionar el c
 
 **1️⃣ Clonar el repositorio**
 ```bash
-git clone [https://github.com/tu-usuario/gympro-backend.git](https://github.com/tu-usuario/gympro-backend.git)
-cd gympro-backend
+git clone [https://github.com/Bootcamp-IA-P6/proyecto2_equipo3_gym_server.git]
+
+
 2️⃣ Configurar variables de entorno Crea un archivo .env en la raíz del proyecto con tus credenciales de Supabase:
 
 Fragmento de código
+
 SUPABASE_URL=tu_url_de_supabase
 SUPABASE_KEY=tu_anon_key
 DATABASE_URL=postgresql://postgres:password@db.supabase.co:5432/postgres
-3️⃣ Instalar dependencias
 
+3️⃣ Instalar dependencias
 Bash
 pip install -r requirements.txt
+
 4️⃣ Ejecutar la aplicación
 
 Bash
