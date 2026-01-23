@@ -1,52 +1,143 @@
 # 🏋️‍♂️ GYMPRO - Sistema de Gestión de Gimnasio
 
-Este es un sistema de backend robusto diseñado para gestionar las operaciones diarias de un gimnasio. Permite al **administrador** dar de alta en el sistema a usuarios, entrenadores, alumnos y administradores y gestionar para poder visualizar quienes están de alta o baja.
+### 📋 Descripción
+**GYMPRO** es un sistema de backend robusto y escalable diseñado para centralizar y automatizar las operaciones diarias de un gimnasio. La plataforma permite una administración integral de personal y clientes, facilitando el control de altas, bajas y la organización de actividades deportivas en tiempo real.
+
+### 🎯 Objetivo del Proyecto
+Proporcionar una herramienta administrativa eficiente que permita gestionar el ciclo de vida de usuarios (alumnos, entrenadores y administradores) y la programación de clases, garantizando la integridad de los datos mediante una arquitectura moderna y segura.
 
 ---
 
-## 🚀 Tecnologías Utilizadas
+### ✨ Características Principales
 
-* **Framework:** FastAPI (Python)
-* **Base de Datos:** Supabase (PostgreSQL)
-* **ORM:** SQLAlchemy
-* **Contenerización:** Docker & Docker Compose
+**👥 Gestión de Usuarios y Roles**
+* ✅ **CRUD Completo:** Registro, consulta, edición y eliminación de Alumnos, Entrenadores y Administradores.
+* ✅ **Control de Estado:** Visualización y gestión de usuarios activos e inactivos (altas/bajas).
+* ✅ **Sistema de Roles:** Permisos diferenciados según el tipo de perfil dentro del sistema.
+
+**📅 Control de Actividades**
+* ✅ **Gestión de Clases:** Creación, actualización de horarios y cancelación de sesiones.
+* ✅ **Asignaciones:** Vinculación directa de entrenadores a clases específicas y alumnos a sus respectivas membresías.
+
+**🛡️ Persistencia y Seguridad**
+* ✅ **Sincronización Real-Time:** Integración con Supabase para actualización instantánea de datos.
+* ✅ **Validación Estricta:** Uso de Pydantic para asegurar que los datos de entrada cumplan con los requisitos del negocio.
+* ✅ **Seguridad JWT:** Infraestructura preparada para la validación de tokens y protección de rutas.
 
 ---
 
-## 📂 Estructura del Proyecto (Jerarquía)
+### 🚀 Tecnologías
 
-```plaintext
+| Categoría | Tecnologías |
+| :--- | :--- |
+| **Runtime** | Python 3.10+ |
+| **Framework** | FastAPI |
+| **Base de Datos** | Supabase (PostgreSQL) |
+| **ORM** | SQLAlchemy |
+| **Validación** | Pydantic |
+| **Contenerización** | Docker, Docker Compose |
+| **Servidor ASGI** | Uvicorn |
+
+---
+
+### 📦 Instalación Local
+
+**1️⃣ Clonar el repositorio**
+```bash
+git clone [https://github.com/tu-usuario/gympro-backend.git](https://github.com/tu-usuario/gympro-backend.git)
+cd gympro-backend
+2️⃣ Configurar variables de entorno Crea un archivo .env en la raíz del proyecto con tus credenciales de Supabase:
+
+Fragmento de código
+SUPABASE_URL=tu_url_de_supabase
+SUPABASE_KEY=tu_anon_key
+DATABASE_URL=postgresql://postgres:password@db.supabase.co:5432/postgres
+3️⃣ Instalar dependencias
+
+Bash
+pip install -r requirements.txt
+4️⃣ Ejecutar la aplicación
+
+Bash
+uvicorn app:app --reload
+💡 La documentación automática estará disponible en: http://localhost:8000/docs
+
+🐳 Dockerización
+El proyecto está completamente preparado para entornos de contenedores, lo que garantiza que funcione de manera idéntica en cualquier máquina.
+
+Dockerfile: Configura la imagen base de Python, instala dependencias y optimiza el entorno de ejecución.
+
+Docker Compose: Orquesta el backend, mapea los puertos (8000:8000) y carga automáticamente las variables de entorno.
+
+Comandos rápidos:
+
+Bash
+# Construir la imagen
+docker-compose build
+
+# Levantar el sistema
+docker-compose up -d
+📁 Estructura del Proyecto
+Plaintext
 GYMPRO-BACKEND/
-├── .github/                # Automatización y CI/CD
-│   └── workflows/          # Archivos YAML para pruebas y despliegues automáticos
-├── config/                 # Ajustes globales (Variables de entorno, CORS)
-├── controllers/            # Lógica de negocio (El cerebro que une rutas y modelos)
-├── core/                   # Seguridad (Validación de JWT, Roles y permisos)
-├── database/               # Conexión a Supabase y configuración de SQLAlchemy
-├── docs/                   # Especificaciones técnicas y documentación extra
-├── models/                 # Modelos de base de datos (Clases de SQLAlchemy)
-├── routes/                 # Endpoints de la API (usuarios, clases, entrenadores)
-├── schemas/                # Validación de datos de entrada/salida (Pydantic)
-├── tests/                  # Pruebas unitarias y de integración (Auth, CRUD)
-├── utils/                  # Funciones de apoyo (Exportación CSV, Helpers)
-├── app.py                  # Punto de entrada principal de FastAPI
-├── docker-compose.yml      # Orquestación de contenedores
-├── Dockerfile              # Configuración de la imagen del backend
-└── requirements.txt        # Dependencias de Python
+├── src/
+│   ├── routes/          # Endpoints de la API (usuarios, clases, entrenadores)
+│   ├── controllers/     # Lógica de negocio (Cerebro que une rutas y modelos)
+│   ├── models/          # Modelos de base de datos (SQLAlchemy)
+│   ├── schemas/         # Validación de datos entrada/salida (Pydantic)
+│   ├── database/        # Conexión a Supabase y configuración de DB
+│   ├── core/            # Seguridad (Validación de JWT, Roles y permisos)
+│   ├── config/          # Ajustes globales (Variables de entorno, CORS)
+│   ├── utils/           # Funciones de apoyo (Exportación CSV, Helpers)
+├── tests/               # Pruebas unitarias y de integración
+├── docs/                # Especificaciones técnicas adicionales
+├── .github/workflows/   # Automatización y CI/CD
+├── Dockerfile           # Configuración de imagen Docker
+├── docker-compose.yml   # Orquestación de contenedores
+└── requirements.txt     # Dependencias del proyecto
+📝 Scripts Disponibles
+npm run dev (o el comando equivalente en Python):
 
+uvicorn app:app --reload: Inicia el servidor de desarrollo.
 
+pytest: Ejecuta la suite de pruebas.
 
-🛠️ Funcionalidades Principales (CRUD)El sistema permite al Administrador realizar las siguientes acciones:Gestión de Usuarios: Registro, modificación y eliminación de Alumnos, Entrenadores y otros Administradores.Control de Clases: Crear nuevas sesiones de entrenamiento, actualizar horarios o cancelar clases.Asignación de Roles: Vincular entrenadores específicos a clases y alumnos a membresías.Persistencia: Todo se sincroniza en tiempo real con Supabase.
+docker-compose up: Levanta la infraestructura completa.
 
+👩‍💻 Equipo de Desarrollo
+Tu Nombre - GitHub - LinkedIn
 
-🐳 Dockerización y DesplieguePara asegurar que el proyecto funcione en cualquier computadora, hemos implementado Docker siguiendo estos pasos:1. Creación del DockerfileConfiguramos la imagen base de Python, instalamos las dependencias de requirements.txt y definimos el comando para ejecutar Uvicorn. Esto garantiza que el entorno de ejecución sea siempre el mismo.2. Configuración de docker-compose.ymlPara facilitar el desarrollo local, usamos Docker Compose. Este archivo orquesta nuestro backend:Mapea los puertos (ej. 8000:8000).Carga las variables de entorno necesarias para conectar con Supabase.Permite levantar todo el sistema con un solo comando.Pasos para ejecutar:Construir la imagen: docker-compose buildLevantar el contenedor: docker-compose up⚙️ Instalación LocalClona el repositorio.Crea un archivo .env con tus credenciales de Supabase.Instala dependencias:Bashpip install -r requirements.txt
+## 🔌 Endpoints Principales
 
+### Base URL
+`http://localhost:8000`
 
+### 🔐 Autenticación y Usuarios
+| Método | Endpoint | Descripción | Auth |
+| :--- | :--- | :--- | :---: |
+| POST | `/auth/login` | Iniciar sesión y obtener token | ❌ |
+| GET | `/users` | Listar todos los usuarios (Alumnos/Entrenadores) | ✅ Admin |
+| POST | `/users` | Crear un nuevo usuario | ✅ Admin |
+| GET | `/users/:id` | Obtener detalle de un usuario específico | ✅ Admin |
+| DELETE | `/users/:id` | Dar de baja a un usuario | ✅ Admin |
 
-Ejecuta la aplicación:Bashuvicorn app:app --reload
+**Ejemplo: Crear Usuario (Alumno/Entrenador)**
+`POST /users`
 
-
-🛠️ El Stack Tecnológico (¿Por qué estas herramientas?)FastAPI (Python): Elegimos este framework por su velocidad asíncrona y la generación automática de documentación (Swagger). Nos permite manejar múltiples peticiones de usuarios al mismo tiempo sin degradar el rendimiento.Supabase (PostgreSQL): Proporciona la solidez de una base de datos relacional con la velocidad de un Backend-as-a-Service.
-
-
- Gracias a esto, la persistencia de datos de los alumnos y las clases es instantánea y segura.SQLAlchemy: Como ORM, nos permite interactuar con la base de datos usando objetos de Python, facilitando el mantenimiento del código y evitando errores en las consultas SQL.Docker & Docker Compose 
+```json
+{
+  "username": "jdoe_gym",
+  "email": "jdoe@example.com",
+  "full_name": "John Doe",
+  "role": "alumno",
+  "status": "activo",
+  "password": "SecurePassword123"
+}
+🏋️‍♂️ Gestión de ClasesMétodoEndpointDescripciónAuthGET/classesListar todas las clases programadas❌POST/classesCrear una nueva sesión de entrenamiento✅ AdminPUT/classes/:idActualizar horario o entrenador de una clase✅ AdminDELETE/classes/:idCancelar/Eliminar una clase✅ AdminEjemplo: Crear ClasePOST /classesJSON{
+  "name": "Crossfit Avanzado",
+  "schedule": "2024-05-20T10:00:00",
+  "trainer_id": 5,
+  "capacity": 20,
+  "room": "Sala A"
+}
+🛡️ Seguridad y Buenas PrácticasEn GYMPRO, la seguridad es nuestra prioridad. Hemos implementado:✅ Validación de Datos: Cada entrada es filtrada por modelos de Pydantic para evitar datos corruptos.✅ Haseo de Contraseñas: Las claves nunca se guardan en texto plano, usamos algoritmos de encriptación fuerte.✅ Protección de Rutas: Middleware especializado que verifica el rol del usuario antes de permitir acciones CRUD.✅ CORS: Configurado para permitir peticiones únicamente desde el dominio de tu Frontend oficial.
