@@ -3,6 +3,16 @@
 ### 📋 Descripción
 **GYMPRO** es un sistema de backend robusto y escalable diseñado para centralizar y automatizar las operaciones diarias de un gimnasio. La plataforma permite una administración integral de personal y clientes, facilitando el control de altas, bajas y la organización de actividades deportivas en tiempo real.
 
+
+![Python](https://img.shields.io/badge/PYTHON-3.10%2B-blue?style=for-the-badge&logo=python&logoColor=white)
+![FastAPI](https://img.shields.io/badge/FASTAPI-0.100%2B-009688?style=for-the-badge&logo=fastapi&logoColor=white)
+![Supabase](https://img.shields.io/badge/SUPABASE-PostgreSQL-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white)
+![Docker](https://img.shields.io/badge/DOCKER-5.1-2496ED?style=for-the-badge&logo=docker&logoColor=white)
+
+**API REST profesional para la gestión integral de entrenamientos y usuarios**
+
+[Características](#-características-principales) • [Instalación](#-instalación-local) • [Análisis de Datos](#-análisis-del-modelo-de-datos) • [API](#-endpoints-principales) • [Despliegue](#-dockerización)
+
 ### 🎯 Objetivo del Proyecto
 Proporcionar una herramienta administrativa eficiente que permita gestionar el ciclo de vida de usuarios (alumnos, entrenadores y administradores) y la programación de clases, garantizando la integridad de los datos mediante una arquitectura moderna y segura.
 
