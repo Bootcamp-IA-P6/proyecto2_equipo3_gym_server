@@ -8,9 +8,6 @@ Proporcionar una herramienta administrativa eficiente que permita gestionar el c
 
 ---
 
-<div align="center">
-
----
 
 ## 📊 Análisis del Modelo de Datos
 
@@ -52,9 +49,9 @@ de manera centralizada, protegiendo la información sensible del gimnasio.
 
 ---
 
-</div>
 
- <img src=(https://github.com/Bootcamp-IA-P6/proyecto2_equipo3_gym_server/blob/feature/Redme-GymPro-server/docs/img/diagrama.png)" alt="Diagrama de Base de Datos GYMPRO" width="850">
+
+ <img src="(docs/img/diagrama.png)" alt="Diagrama de Base de Datos GYMPRO" width="850">
 
 ### ✨ Características Principales
 
