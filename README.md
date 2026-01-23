@@ -33,7 +33,7 @@ de información entre el personal administrativo, los instructores y los alumnos
 ### 📋 Resumen de Entidades
 
 **`users`** Es la tabla maestra. Almacena la identidad de cada persona (nombre, email, hash de contraseña)  
-y define su permiso mediante un campo `role` (Admin/User).
+y define su permiso mediante un campo `role` (Admin/User/Entrenador).
 
 **`trainers`** Una extensión de la tabla de usuarios. Aquí se guarda la información específica de los  
 profesionales, como su `specialty`, vinculándolos directamente a su perfil de usuario.
@@ -74,8 +74,8 @@ de manera centralizada, protegiendo la información sensible del gimnasio.
 * ✅ **Sistema de Roles:** Permisos diferenciados según el tipo de perfil dentro del sistema.
 
 **📅 Control de Actividades**
-* ✅ **Gestión de Clases:** Creación, actualización de horarios y cancelación de sesiones.
-* ✅ **Asignaciones:** Vinculación directa de entrenadores a clases específicas y alumnos a sus respectivas membresías.
+* ✅ **Gestión de Clases:** Registro de clases, modificación, desactivación
+* ✅ **Asignaciones:** Vinculación directa de entrenadores a clases específicas y alumnos 
 
 **🛡️ Persistencia y Seguridad**
 * ✅ **Sincronización Real-Time:** Integración con Supabase para actualización instantánea de datos.
@@ -141,6 +141,8 @@ docker-compose build
 
 # Levantar el sistema
 docker-compose up -d
+
+
 📁 Estructura del Proyecto
 Plaintext
 GYMPRO-BACKEND/
@@ -204,4 +206,10 @@ Tu Nombre - GitHub - LinkedIn
   "capacity": 20,
   "room": "Sala A"
 }
-🛡️ Seguridad y Buenas PrácticasEn GYMPRO, la seguridad es nuestra prioridad. Hemos implementado:✅ Validación de Datos: Cada entrada es filtrada por modelos de Pydantic para evitar datos corruptos.✅ Haseo de Contraseñas: Las claves nunca se guardan en texto plano, usamos algoritmos de encriptación fuerte.✅ Protección de Rutas: Middleware especializado que verifica el rol del usuario antes de permitir acciones CRUD.✅ CORS: Configurado para permitir peticiones únicamente desde el dominio de tu Frontend oficial.
+##🛡️ Seguridad y Buenas PrácticasEn GYMPRO 
+
+  La seguridad es nuestra prioridad. Hemos implementado:
+ ✅ Validación de Datos: Cada entrada es filtrada por modelos de Pydantic para evitar datos corruptos.
+ ✅ Haseo de Contraseñas: Las claves nunca se guardan en texto plano, usamos algoritmos de encriptación fuerte.
+ ✅ Protección de Rutas: Middleware especializado que verifica el rol del usuario antes de permitir acciones CRUD.
+ ✅ CORS: Configurado para permitir peticiones únicamente desde el dominio de tu Frontend oficial.
