@@ -145,6 +145,7 @@ docker-compose up -d
 
 📁 Estructura del Proyecto
 Plaintext
+```
 GYMPRO-BACKEND/
 ├── src/
 │   ├── routes/          # Endpoints de la API (usuarios, clases, entrenadores)
@@ -161,6 +162,7 @@ GYMPRO-BACKEND/
 ├── Dockerfile           # Configuración de imagen Docker
 ├── docker-compose.yml   # Orquestación de contenedores
 └── requirements.txt     # Dependencias del proyecto
+```
 📝 Scripts Disponibles
 npm run dev (o el comando equivalente en Python):
 
