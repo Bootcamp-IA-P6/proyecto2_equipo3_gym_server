@@ -170,8 +170,8 @@ pytest: Ejecuta la suite de pruebas.
 
 docker-compose up: Levanta la infraestructura completa.
 
-👩‍💻 Equipo de Desarrollo
-Tu Nombre - GitHub - LinkedIn
+###👩‍💻 Equipo de Desarrollo
+Juan Manuel - Iris - Gema -Naiza
 
 ## 🔌 Endpoints Principales
 
@@ -190,7 +190,7 @@ Tu Nombre - GitHub - LinkedIn
 **Ejemplo: Crear Usuario (Alumno/Entrenador)**
 `POST /users`
 
-json
+``json
 {
   "username": "jdoe_gym",
   "email": "jdoe@example.com",
@@ -199,7 +199,14 @@ json
   "status": "activo",
   "password": "SecurePassword123"
 }
-🏋️‍♂️ Gestión de ClasesMétodoEndpointDescripciónAuthGET/classesListar todas las clases programadas❌POST/classesCrear una nueva sesión de entrenamiento✅ AdminPUT/classes/:idActualizar horario o entrenador de una clase✅ AdminDELETE/classes/:idCancelar/Eliminar una clase✅ AdminEjemplo: Crear ClasePOST /classesJSON{
+## Clases Método Endpoin tDescripción AuthGET/classesListar
+todas las clases programadas
+
+
+✅ AdminPUT/classes/:id Actualizar horario o entrenador de una clase
+✅ AdminDELETE/classes/:id Cancelar/Eliminar una clase
+✅ AdminEjemplo: Crear ClasePOST /classesJSON{
+
   "name": "Crossfit Avanzado",
   "schedule": "2024-05-20T10:00:00",
   "trainer_id": 5,
